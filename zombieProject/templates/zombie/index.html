@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+<a href="{% url 'play' %}"> play now </a>
+<a href="{% url 'leaderboards' %}"> leaderboards </a>
+{% endblock %}
