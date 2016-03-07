@@ -6,7 +6,11 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     # The additional attributes we wish to include.
-    website = models.URLField(blank=True)
+    games_played = models.IntegerField(default=0)
+    most_days_survived = models.IntegerField(default=0)
+    most_kills = models.IntegerField(default=0)
+    most_people = models.IntegerField(default=0)
+    current_game = models.CharField(max_length=1024)
     picture = models.ImageField(upload_to='profile_images', blank=True)
 
     # Override the __unicode__() method to return out something meaningful!
