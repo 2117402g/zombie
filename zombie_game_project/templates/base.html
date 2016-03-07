@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    <head>
+        <title>Scavenger {% block title %}Zombie apocalypse!{% endblock %}</title>
+    </head>
+            <h1>
+            <a href="{% url 'index' %}"> picture here</a>
+            <a href="{% url 'how_to_play' %}">How to Play</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'user' %}">Profile</a>
+                <a href="{% url 'auth_logout' %}?next=/scavenger/">Logout</a>
+            {% else %}
+                <a href="{% url 'registration_register' %}">Sign Up</a>
+                <a href="{% url 'auth_login' %}">Sign In</a>
+            {% endif %}
+            </h1>
+    <body>
+        <div>
+            {% block body_block %}{% endblock %}
+        </div>
+
+        <hr />
+
+        <div>
+            <ul>
+                Footer
+
+            </ul>
+        </div>
+    </body>
+</html>
