@@ -8,7 +8,17 @@ from zombie.models import Achievement, Badge, UserProfile
 
 
 def populate():
-    kyle_user = add_user('Keyisle','7','50','24','32','abcd','data/profile.png')
+    kyle_user = add_user('Keyisle','7','50','24','32','','data/profile.png')
+    leif_user = add_user('Leif','11','400','56','7','','data/profile.png')
+    three_user = add_user('Bob','51','4','23','6','','data/profile.png')
+    four_user = add_user('Bill','31','88','45','62','','data/profile.png')
+    five_user = add_user('Guy','11','48','25','62','','data/profile.png')
+    six_user = add_user('Gal','34','23','55','45','','data/profile.png')
+    seven_user = add_user('noob','1','1','1','1','','data/profile.png')
+    eight_user = add_user('robot','101','11','100','1','','data/profile.png')
+    nine_user = add_user('tom','3','2','5','5','','data/profile.png')
+    ten_user = add_user('wad2','340','223','155','451','','data/profile.png')
+    
     kill_badge = add_badge('TestBadge','this is a test badge','kills','1','1','data/badge.png')
 
 def add_badge(name,desc,Btype,criteria,level,icon):
