@@ -9,7 +9,7 @@ class MyRegistrationView(RegistrationView):
     def get_success_url(self,request, user):
         return '/scavenger/'
 
-urlpatterns = patterns(
+urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^scavenger/', include('zombie.urls')),
     url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
