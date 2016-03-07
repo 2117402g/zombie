@@ -13,4 +13,5 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('website', 'picture')
+        fields = ('Games Played', 'Most Days Survived', 'Most kills' , 'Current Game','picture')
+#'games_played','most_days_survived','most_kills','most_people','current_game',
