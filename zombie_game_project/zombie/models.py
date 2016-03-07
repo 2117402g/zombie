@@ -4,7 +4,7 @@ from datetime import datetime
 
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, unique= True)
 
     # The additional attributes we wish to include.
     games_played = models.IntegerField(default=0)
@@ -32,5 +32,7 @@ class Badge(models.Model):
 class Achievement(models.Model):
     badge = models.ForeignKey(Badge)
     player = models.ForeignKey(UserProfile)
-    date = models.DateTimeField(default=datetime.now())
+    date = models.DateTimeField()
 
+    def __unicode__(self):
+        return self.player.name
