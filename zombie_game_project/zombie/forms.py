@@ -10,8 +10,9 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password')
 
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('Games Played', 'Most Days Survived', 'Most kills' , 'Current Game','picture')
-#'games_played','most_days_survived','most_kills','most_people','current_game',
+        fields = ('games_played', 'most_days_survived', 'most_kills', 'current_game', 'picture')
+        # 'games_played','most_days_survived','most_kills','most_people','current_game',
