@@ -23,7 +23,7 @@
       body {
           font-family: sans-serif;
           /* background-image: url("% static "images/background.jpg" %}")*/
-          background-color: black;
+          background-color: white;
       }
 
       .navbar-header{
@@ -53,35 +53,32 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url 'index' %}"> Home</a></li>
             <li><a href="{% url 'how_to_play' %}">How to Play</a></li>
-            <li><a href ="{% url 'login' %}">Login</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'user' %}">Profile</a></li>
                     <li><a href="{% url 'auth_logout' %}?next=/scavenger/">Logout</a></li>
+
                 {% else %}
                     <li><a href="{% url 'registration_register' %}">Sign Up</a></li>
+                    <li><a href ="{% url 'auth_login' %}">Login</a></li>
+
                 {% endif %}
                 </ul>
             </div>
           </div>
      </div>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-        <div>
-            {% block body_block %}
 
-            {% endblock %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+           <div>
+                {% block body_block %}{% endblock %}
+                </div>
         </div>
+      </div>
+    </div>
 
-        <hr />
 
-        <div>
-            <ul>
-                Footer
 
-            </ul>
-        </div>
+
 
 
   <!-- Bootstrap core JavaScript

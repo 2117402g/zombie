@@ -7,7 +7,8 @@ urlpatterns = patterns('',
         url(r'^leaderboards/', views.leaderboards, name='leaderboards'),
         url(r'^user/$', views.user, name='user'),
         url(r'^play/', views.play, name='play'),
-        url(r'^login/',views.login, name = 'login'),
+        url(r'^login/',views.user_login, name = 'auth_login'),
         url(r'^register/$', views.register, name='register'),
-        url(r'^turn/?P<action>[A-Z]+/(?P<num>[0-9]+)/$', views.turn, name='turn')
+        url(r'^turn/?P<action>[A-Z]+/(?P<num>[0-9]+)/$', views.turn, name='turn'),
+        url(r'^logout/$', views.user_logout, name='auth_logout'),
                        )

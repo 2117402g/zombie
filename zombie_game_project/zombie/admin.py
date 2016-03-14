@@ -1,5 +1,5 @@
 from django.contrib import admin
-from zombie.models import UserProfile ,Badge , Achievement
+from zombie.models import UserProfile ,Badge, Achievement
 
 admin.site.register(UserProfile)
 admin.site.register(Badge)

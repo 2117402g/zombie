@@ -4,7 +4,7 @@ from datetime import datetime
 
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
-    user = models.OneToOneField(User, unique= True)
+    user = models.OneToOneField(User)
 
     # The additional attributes we wish to include.
     games_played = models.IntegerField(default=0)

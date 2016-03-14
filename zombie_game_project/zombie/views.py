@@ -1,66 +1,79 @@
-from django.shortcuts import render,render_to_response
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from zombie.forms import UserForm, UserProfileForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.template import RequestContext
+
+
 
 
 from zombie.models import UserProfile
 from engine.game import Game
 
+
 def index(request):
     context_dict = {}
     return render(request, 'zombie/index.html', context_dict)
+
 
 def play(request):
     g = Game()
     g.start_new_day()
     print g.street.get_current_house()
     print g.street
-    #if games exists
+    # if games exists
     # load game is it over?
-    context_dict ={'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
-                   'time_left':g.time_left, 'street': g.street , 'house_list': g.street.house_list,
-                   'current_house': g.street.get_current_house(),
-                   }
-    return render(request,'zombie/play.html',context_dict)
+    context_dict = {'player': g.player_state, 'game': g.game_state, 'turn_options': g.turn_options(),
+                    'time_left': g.time_left, 'street': g.street, 'house_list': g.street.house_list,
+                    'current_house': g.street.get_current_house(),
+                    }
+    return render(request, 'zombie/play.html', context_dict)
 
-#<li><a href="/scavenger/turn/{{turn}}/{{}}">{{ turn }}</a></li>
-def turn(request,action,num):
+
+# <li><a href="/scavenger/turn/{{turn}}/{{}}">{{ turn }}</a></li>
+def turn(request, action, num):
     g = Game()
-    if action == ['MOVE','SEARCH']:
+    if action == ['MOVE', 'SEARCH']:
         g.take_turn(action, num)
     else:
         g.take_turn(action)
     if g.game_state == 'STREET':
-        context_dict ={'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
-                   'time_left':g.time_left, 'street': g.street , 'house_list': g.street.house_list,
-                   'current_house': g.street.get_current_house(),
-                   }
-    elif g.game_state == 'HOUSE':
-        context_dict = {'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
-                    'time_left':g.time_left, 'current_house':g.street.get_current_house(),
-                    'current_room':g.street.get_current_house().get_current_room()
-        }
-    elif g.game_state == 'ZOMBIE':
-        context_dict = {'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
-                    'time_left':g.time_left, 'num_zombies':g.street.get_current_house().get_current_room().zombies,
+        context_dict = {'player': g.player_state, 'game': g.game_state, 'turn_options': g.turn_options(),
+                        'time_left': g.time_left, 'street': g.street, 'house_list': g.street.house_list,
+                        'current_house': g.street.get_current_house(),
                         }
-    return render(request, 'zombie/play.html',context_dict)
+    elif g.game_state == 'HOUSE':
+        context_dict = {'player': g.player_state, 'game': g.game_state, 'turn_options': g.turn_options(),
+                        'time_left': g.time_left, 'current_house': g.street.get_current_house(),
+                        'current_room': g.street.get_current_house().get_current_room()
+                        }
+    elif g.game_state == 'ZOMBIE':
+        context_dict = {'player': g.player_state, 'game': g.game_state, 'turn_options': g.turn_options(),
+                        'time_left': g.time_left,
+                        'num_zombies': g.street.get_current_house().get_current_room().zombies,
+                        }
+    return render(request, 'zombie/play.html', context_dict)
+
 
 def leaderboards(request):
     mostDays = UserProfile.objects.order_by('-most_days_survived')[:20]
     mostKills = UserProfile.objects.order_by('-most_kills')[:20]
     mostPeople = UserProfile.objects.order_by('-most_people')[:20]
-    context_dict = {'mostDays': mostDays,'mostKills':mostKills,'mostPeople':mostPeople}
-    return render(request, 'zombie/leaderboards.html' , context_dict)
+    context_dict = {'mostDays': mostDays, 'mostKills': mostKills, 'mostPeople': mostPeople}
+    return render(request, 'zombie/leaderboards.html', context_dict)
+
 
 def user(request):
-    return HttpResponse("user")
+    return render(request, "zombie/user.html", {})
 
-def how_to_play(request,):
-    return HttpResponse("how_to_play")
 
-def login(request):
+def how_to_play(request ):
+    return render(request,"zombie/how_to_play.html",{})
+
+
+def user_login(request):
     if request.method == 'POST':
 
         username = request.POST.get('username')
@@ -69,7 +82,6 @@ def login(request):
         # Use Django's machinery to attempt to see if the username/password
         # combination is valid - a User object is returned if it is.
         user = authenticate(username=username, password=password)
-
 
         if user:
             if user.is_active:
@@ -83,7 +95,7 @@ def login(request):
             return render_to_response('registration/login.html')
 
     else:
-            return render(request, 'registration/login.html', {})
+        return render(request, 'registration/login.html', {})
 
 
 def register(request):
@@ -126,6 +138,28 @@ def register(request):
         profile_form = UserProfileForm()
 
     # Render the template depending on the context.
-    return render(request,
-            'zombie/register.html',
-            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
+    return render(request,'registration/login.html',
+                  {'user_form': user_form, 'profile_form': profile_form, 'registered':  registered})
+
+@login_required
+def user_logout(request):
+    # Since we know the user is logged in, we can now just log them out.
+    logout(request)
+
+    # Take the user back to the homepage.
+    return HttpResponseRedirect('/scavenger/')
+
+@login_required
+def profile(request):
+    context = RequestContext(request)
+    context_dict = {}
+    u = User.objects.get(username=request.user)
+
+    try:
+        up = UserProfile.objects.get(user=u)
+    except:
+        up = None
+
+    context_dict['user'] = u
+    context_dict['userprofile'] = up
+    return render_to_response('zombie/user.html', context_dict, context)
