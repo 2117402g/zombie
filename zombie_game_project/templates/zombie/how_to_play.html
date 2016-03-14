@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-</body>
-</html>
+{% block title %}How To Play{% endblock %}
+
+{% block body_block %}
+    <img src="{% static "images/zombie.jpg" %}" align="left">
+<h1>Objective of the Game </h1>
+        <p>A player starts on day one of the zombie apocalypse. The goal is to last as many days as possible</p>
+    <h2> Functions</h2>
+        <p> Players have the option to enter a house or move to the next</p>
+        <p>When inside the house the player has the option to search different rooms </p>
+{% endblock %}

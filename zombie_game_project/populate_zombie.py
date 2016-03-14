@@ -25,9 +25,9 @@ def add_badge(name,desc,Btype,criteria,level,icon):
     b = Badge.objects.get_or_create(name=name)[0]
     b.desc=desc
     b.Btype=Btype
-	b.criteria=criteria
-	b.level=level
-	b.icon=icon
+    b.criteria=criteria
+    b.level=level
+    b.icon=icon
     b.save()
     return b
 
@@ -35,13 +35,13 @@ def add_user(user,games_played,most_days_survived,most_kills,most_people,current
     u = UserProfile.objects.get_or_create(user=user)[0]
     u.games_played = games_played
     u.most_days_survived = most_days_survived
-	u.most_kills = most_kills
-	u.most_people = most_people
-	u.current_game = current_game
-	u.picture = picture
+    u.most_kills = most_kills
+    u.most_people = most_people
+    u.current_game = current_game
+    u.picture = picture
     u.save()
     return u
-	
+
 def add_achievement(badge,player,date):
     a = Achievement.objects.get_or_create(badge=badge,player=player)[0]
     a.date=date
