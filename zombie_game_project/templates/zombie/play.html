@@ -3,5 +3,18 @@
 {% load staticfiles %}
 
 {% block body_block %}
+    {{ game }}  </br>
+    {% if  {{game}}  == STREET %}
+        {{ street }} </br>
+        {% for house in house_list  %}
+            {{ house }}
+        {% endfor %}
+    {% endif %}
+    {{ player }} </br>
+    Day: {{player.days}}, Time left in day: {{time_left}}
+    {% for turn in turn_options %}
+    <li><a href="{{ turn.url }}">{{ turn }}</a></li>
+    {% endfor %}
+
 
 {% endblock %}

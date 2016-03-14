@@ -10,9 +10,8 @@ def index(request):
 def play(request):
     g = Game()
     g.start_new_day()
-    print g.game_state
-    print g.player_state
     print g.street.get_current_house()
+    print g.street
     #if games exists
     # load game is it over?
     context_dict ={'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
@@ -21,7 +20,8 @@ def play(request):
                    }
     return render(request,'zombie/play.html',context_dict)
 
-def turn(action,num):
+#<li><a href="/scavenger/turn/{{turn}}/{{}}">{{ turn }}</a></li>
+def turn(request,action,num):
     g = Game()
     if action == ['MOVE','SEARCH']:
         g.take_turn(action, num)
@@ -41,7 +41,7 @@ def turn(action,num):
         context_dict = {'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                     'time_left':g.time_left, 'num_zombies':g.street.get_current_house().get_current_room().zombies,
                         }
-    return render('zombie/play.html',context_dict)
+    return render(request, 'zombie/play.html',context_dict)
 
 def leaderboards(request):
     mostDays = UserProfile.objects.order_by('-most_days_survived')[:20]
