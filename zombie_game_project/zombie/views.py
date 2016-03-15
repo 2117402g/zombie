@@ -72,11 +72,12 @@ def turn(request,action,num):
 
 
 def leaderboards(request):
-    mostDays = UserProfile.objects.order_by('-most_days_survived')[:20]
-    mostKills = UserProfile.objects.order_by('-most_kills')[:20]
-    mostPeople = UserProfile.objects.order_by('-most_people')[:20]
-    context_dict = {'mostDays': mostDays, 'mostKills': mostKills, 'mostPeople': mostPeople}
-    return render(request, 'zombie/leaderboards.html', context_dict)
+	mostDays = UserProfile.objects.order_by('-most_days_survived')[:20]
+	mostKills = UserProfile.objects.order_by('-most_kills')[:20]
+	mostPeople = UserProfile.objects.order_by('-most_people')[:20]
+	mostPlays = UserProfile.objects.order_by('-games_played')[:20]
+	context_dict = {'mostPlays': mostPlays,'mostDays': mostDays, 'mostKills': mostKills, 'mostPeople': mostPeople}
+	return render(request, 'zombie/leaderboards.html', context_dict)
 
 
 def user(request):

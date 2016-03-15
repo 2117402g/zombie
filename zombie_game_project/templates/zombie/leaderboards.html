@@ -3,5 +3,40 @@
 {% load staticfiles %}
 
 {% block body_block %}
+   <h1>Most Days Survived</h1>
+        {% if mostDays %}
+        <ul>
+        {% for users in mostDays %}
+        <li>{{ users }} {{ users.most_days_survived }}</a></li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+		
+   <h1>Most Zombie Kills</h1>
+        {% if mostKills %}
+        <ul>
+        {% for users in mostKills %}
+        <li>{{ users }} {{ users.most_kills }}</a></li>
+        {% endfor %}
+        </ul>		
+        {% endif %}
+		
+   <h1>Most Games Played</h1>
+        {% if mostPlays %}
+        <ul>
+        {% for users in mostPlays %}
+        <li>{{ users }} {{ users.games_played }}</a></li>
+        {% endfor %}
+        </ul>		
+        {% endif %}		
 
+   <h1>Most Party Members</h1>
+        {% if mostPeople %}
+        <ul>
+        {% for users in mostPeople %}
+        <li>{{ users }} {{ users.most_people }}</a></li>
+        {% endfor %}
+        </ul>		
+        {% endif %}		
+		
 {% endblock %}
