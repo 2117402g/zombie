@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+    {% if  street  %}
+        {{ game }}  </br>
+        {{ street }} </br>
+        {% for house in house_list  %}
+            {{ house }}</br>
+        {% endfor %}
+        {{ player }} </br>
+        Day: {{player.days}}, Time left in day: {{time_left}}
+        {% if move_options %}
+            {% for move in move_options %}
+                <li><a href="/scavenger/turn/MOVE/{{move}}">MOVE</a></li>
+            {% endfor %}
+        {% endif %}
+        <li><a href="/scavenger/turn/ENTER/0">ENTER</a></li>
+        <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
+    {% elif current_room %}
+    {% elif num_zombies %}
+    {% endif %}
+
+{% endblock %}
