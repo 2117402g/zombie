@@ -53,7 +53,6 @@ def play(request):
 
     return render(request,'zombie/play.html',context_dict)
 
-#<li><a href="/scavenger/turn/{{turn}}/{{}}">{{ turn }}</a></li>
 def turn(request,action,num):
     g = Game()
     action = str(action)

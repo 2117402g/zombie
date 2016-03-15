@@ -8,7 +8,7 @@ urlpatterns = patterns('',
         url(r'^user/$', views.user, name='user'),
         url(r'^play/', views.play, name='play'),
         url(r'^login/',views.login, name = 'login'),
-        url(r'^logout/',views.logout, name = 'auth_logout'),
+       # url(r'^logout/',views.logout, name = 'auth_logout'),
         url(r'^register/$', views.register, name='register'),
         url(r'^turn/(?P<action>[A-Z]+)/(?P<num>[0-9]+)/', views.turn, name='turn')
                        )
