@@ -73,6 +73,14 @@
                 {% block body_block %}{% endblock %}
                 </div>
         </div>
+        <div class="col-sm-3 col-md-2 sidebar">
+            {% block side_block %}
+            <a href="{% url 'play' %}"><input type="image" src="{% static "images/play_now.jpg" %}" height = "50em" width = "150em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+            <a href="{% url 'leaderboards' %}"> <input type="image" src="{% static "images/leaderboards.jpg" %}" height = "50em" width = "150em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+
+            {% endblock %}
+
+        </div>
       </div>
     </div>
 
