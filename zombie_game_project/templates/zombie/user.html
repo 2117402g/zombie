@@ -9,45 +9,57 @@
         	<h1> {{ user.username }}'s Profile</h1>
        </div>
        <h4>Email: {{ user.email }}</h4>
-       <h3> Your options </h3>
+	   
+       <p> Mugshot:
+       		 {% if userprofile.picture %}
+					<img src="{{ userprofile.picture.url }}" alt="User image " height="100" width="100"/>
+			{% else %}
+					None Given
+			{% endif %}</p>
+			
+
         <br>
         <h3> Your Game Statistics </h3>
      <!-- Display extra information if required -->
+	 
+        <p> Badges:
+		 {% if achievements %}
+                {% for a in achievements %}
+					<img src="{{ a.badge.icon.url }}" alt="yhuh" height="100" width="100"/>
+                {% endfor %}
+			{% else %}
+					None Earned
+			{% endif %}</p>
+        </p>
+		
        <p> Games Played:
-       		{% if UserProfile.games_played %}
-					<a href="{{ UserProfile.games_played }}">{{ UserProfile.games_played}}</a>
+       		{% if userprofile.games_played %}
+					{{ userprofile.games_played}}
 			{% else %}
 					Zero
 			{% endif %}</p>
 
-       <p> Mugshot:
-       		 {% if UserProfile.picture %}
-					<img src="{{ UserProfile.picture.url }}" alt="User image" />
-			{% else %}
-					None Given
-			{% endif %}</p>
-        <p> Badges:
-        </p>
         <p> Most Days Survived:
-       		 {% if UserProfile.most_days_survived %}
-					<a href="{{ UserProfile.most_days_survived }}">{{ UserProfile.most_days_survived}}</a>
+       		 {% if userprofile.most_days_survived %}
+					{{ userprofile.most_days_survived}}
 			{% else %}
 					Zero
 			{% endif %}</p>
-        <p> Average Days Survived:
-       		 {% if UserProfile.avg_days_survived %}
-					<a href="{{ UserProfile.avg_days_survived }}">{{ UserProfile.avg_days_survived}}</a>
+        <p> Most Party Members:
+       		 {% if userprofile.most_people %}
+					{{ userprofile.most_people}}
 			{% else %}
 					Zero
 			{% endif %}</p>
 
         <p> Zombie Kills:
-       		 {% if UserProfile.most_kills %}
-					<a href="{{ UserProfile.most_kills }}">{{ UserProfile.most_kills}}</a>
+       		 {% if userprofile.most_kills %}
+					{{ userprofile.most_kills}}
 			{% else %}
 					Zero
 			{% endif %}</p>
-
+			
+       <h3> Your options </h3>
 
 
 
