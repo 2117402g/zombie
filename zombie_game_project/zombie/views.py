@@ -27,12 +27,13 @@ def fill_dict(g):
             i += 1
     elif g.game_state == 'HOUSE':
         context_dict = {'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
-                   'time_left':g.time_left,"move_options":[],'current_house':g.street.get_current_house(),
+                   'time_left':g.time_left,"search_options":[],'current_house':g.street.get_current_house(),
                     'current_room':g.street.get_current_house().get_current_room(),'update_state':g.update_state,
                         'house':True,}
-        for room in g.street.house_list.room_list:
-            if room != g.street.get_current_house().get_current_room():
-                context_dict["move_options"].append(room)
+        i=0
+        while i <= g.street.house_list.num_of_rooms:
+            context_dict["search_options"].append(i)
+            i+=1
     elif g.game_state == 'ZOMBIE':
         context_dict = {'num_zombies':g.street.get_current_house().get_current_room().zombies,
                         'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),

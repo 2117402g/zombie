@@ -3,8 +3,8 @@
 {% load staticfiles %}
 
 {% block body_block %}
+    {{ game }}  </br>
     {% if  street  %}
-        {{ game }}  </br>
         {{ street }} </br>
         {% for house in house_list  %}
             {{ house }}</br>
@@ -18,8 +18,25 @@
         {% endif %}
         <li><a href="/scavenger/turn/ENTER/0">ENTER</a></li>
         <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
-    {% elif current_room %}
+    {% elif house %}
+        {{ update_state }} </br>
+        {{ player }} </br>
+        Day: {{player.days}}, Time left in day: {{time_left}} </br>
+        {% if move_options %}
+            {% for search in move_options %}
+                <li><a href="/scavenger/turn/SEARCH/{{search}}">SEARCH</a></li>
+            {% endfor %}
+        {% endif %}
+        <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
+        <li><a href="/scavenger/turn/EXIT/0">ENTER</a></li>
     {% elif num_zombies %}
+        {{ player }} </br>
+        Day: {{player.days}}, Time left in day: {{time_left}} </br>
+        zaarrrr rrrgh: {num_zombies} Zombies!!!! </br>
+        <li><a href="/scavenger/turn/FIGHT/0">FIGHT</a></li>
+        <li><a href="/scavenger/turn/RUN/0">RUN</a></li>
+        <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
+
     {% endif %}
 
 {% endblock %}
