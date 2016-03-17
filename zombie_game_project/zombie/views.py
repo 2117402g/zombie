@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.template import RequestContext
 
-from zombie.models import UserProfile
+from zombie.models import UserProfile, User, Achievement
 from engine.game import Game
 import pickle
 
@@ -92,12 +92,18 @@ def profile(request):
     context = RequestContext(request)
     context_dict = {}
     u = User.objects.get(username=request.user)
-
     try:
         up = UserProfile.objects.get(user=u)
     except:
         up = None
-
+	
+    try:
+		a = Achievement.objects.filter(player=up)
+    except:
+		a = None
+		print "fail"
+		
     context_dict['user'] = u
     context_dict['userprofile'] = up
+    context_dict['achievements'] = a
     return render_to_response('zombie/user.html', context_dict, context)

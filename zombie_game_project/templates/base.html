@@ -22,13 +22,13 @@
   <style>
       body {
           font-family: sans-serif;
-          /* background-image: url("% static "images/background.jpg" %}")*/
+          /* background-image: url("% static "images/background.png" %}")*/
           background-color: white;
       }
 
       .navbar-header{
-          background-color: white;
-          color: white;
+          background-color: black;
+          color: black;
       }
       .navbar-fixed-top{
           background-color: black;
@@ -47,15 +47,15 @@
              <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/scavenger/"><input type="image" src="{% static "images/scavenger.jpg" %}" height = "30em" width = "300em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
-            </div>
+            <a class="navbar-header" href="/scavenger/"><input type="image" src="{% static "images/scavenger.png" %}" align = "left" height = "60em" width = "270em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+            </div> 	
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url 'index' %}"> Home</a></li>
             <li><a href="{% url 'how_to_play' %}">How to Play</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'user' %}">Profile</a></li>
-                    <li><a href="{% url 'auth_logout' %}?next=/scavenger/">Logout</a></li>
+                    <li><a href="{% url 'auth_logout' %}">Logout</a></li>
 
                 {% else %}
                     <li><a href="{% url 'registration_register' %}">Sign Up</a></li>
