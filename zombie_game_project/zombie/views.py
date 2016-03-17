@@ -48,19 +48,27 @@ def check(request,g):
         context_dict = {}
         return render(request, 'zombie/play.html',context_dict)
 
+@login_required
 def play(request):
     g = Game()
     g.start_new_day()
-
-    #if games exists
+    u = User.objects.get(username=request.user)
+    try:
+        up = UserProfile.objects.get(user=u)
+    except:
+        up = None
+    #up = UserProfile(user= User.objects.get(username = request.user))
+    #if UserProfile.objects.get(current_game = up.current_game) != "":
+        #cg = UserProfile.objects.get(current_game = up.current_game)
     # load game is it over?
     context_dict = fill_dict(g)
     pps = pickle.dumps(g.player_state)
     pus = pickle.dumps(g.update_state)
     ps = pickle.dumps(g.street)
     pgs = pickle.dumps(g.game_state)
-
+    #up.current_game = [pps,pus,ps,pgs]
     return render(request,'zombie/play.html',context_dict)
+    #cg = UserProfile.objects.get(current_game = current_game)
 
 def turn(request,action,num):
     g = Game()
