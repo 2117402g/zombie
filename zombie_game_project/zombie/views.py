@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.template import RequestContext
 
-from zombie.models import UserProfile
+from zombie.models import UserProfile, User, Achievement
 from engine.game import Game
 import pickle
 
@@ -79,102 +79,27 @@ def leaderboards(request):
 	context_dict = {'mostPlays': mostPlays,'mostDays': mostDays, 'mostKills': mostKills, 'mostPeople': mostPeople}
 	return render(request, 'zombie/leaderboards.html', context_dict)
 
-
-def user(request):
-    return render(request, "zombie/user.html", {})
-
-
 def how_to_play(request ):
     return render(request,"zombie/how_to_play.html",{})
 
-
-def user_login(request):
-    if request.method == 'POST':
-
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        # Use Django's machinery to attempt to see if the username/password
-        # combination is valid - a User object is returned if it is.
-        user = authenticate(username=username, password=password)
-
-        if user:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect('/scavenger/')
-            else:
-                return HttpResponse("Your account is disabled.")
-        else:
-            print "Invalid login details: {0}, {1} ".format(username, password)
-            context_dict = {'bad_details': "Invalid login details supplied."}
-            return render_to_response('registration/login.html')
-
-    else:
-        return render(request, 'registration/login.html', {})
-
-
-def register(request):
-    registered = False
-
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
-
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-
-            user.set_password(user.password)
-            user.save()
-
-            profile = profile_form.save(commit=False)
-            profile.user = user
-
-            # Did the user provide a profile picture?
-            # If so, we need to get it from the input form and put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
-            # Now we save the UserProfile model instance.
-            profile.save()
-
-            # Update our variable to tell the template registration was successful.
-            registered = True
-
-        # Invalid form or forms - mistakes or something else?
-        # Print problems to the terminal.
-        # They'll also be shown to the user.
-        else:
-            print user_form.errors, profile_form.errors
-
-    # Not a HTTP POST, so we render our form using two ModelForm instances.
-    # These forms will be blank, ready for user input.
-    else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-
-    # Render the template depending on the context.
-    return render(request,'registration/login.html',
-                  {'user_form': user_form, 'profile_form': profile_form, 'registered':  registered})
-
-@login_required
-def user_logout(request):
-    # Since we know the user is logged in, we can now just log them out.
-    logout(request)
-
-    # Take the user back to the homepage.
-    return HttpResponseRedirect('/scavenger/')
 
 @login_required
 def profile(request):
     context = RequestContext(request)
     context_dict = {}
     u = User.objects.get(username=request.user)
-
     try:
         up = UserProfile.objects.get(user=u)
     except:
         up = None
-
+	
+    try:
+		a = Achievement.objects.filter(player=up)
+    except:
+		a = None
+		print "fail"
+		
     context_dict['user'] = u
     context_dict['userprofile'] = up
+    context_dict['achievements'] = a
     return render_to_response('zombie/user.html', context_dict, context)

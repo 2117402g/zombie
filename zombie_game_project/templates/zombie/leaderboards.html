@@ -1,42 +1,149 @@
-{% extends 'base.html' %}
-
+<!doctype html>
+<html lang="en">
 {% load staticfiles %}
 
-{% block body_block %}
-   <h1>Most Days Survived</h1>
-        {% if mostDays %}
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=2">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+  <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+  <title>jQuery UI Tabs - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#tabs" ).tabs();
+  });
+  </script>
+
+  <style>
+      body {
+          font-family: sans-serif;
+          /* background-image: url("% static "images/background.jpg" %}")*/
+          background-color: white;
+      }
+
+      .navbar-header{
+          background-color: black;
+          color: black;
+      }
+      .navbar-fixed-top{
+          background-color: black;
+      }
+  </style>
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
+          <div class="container-fluid" >
+            <div class="navbar-header" >
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+             <span class="sr-only">Toggle navigation</span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-header" href="/scavenger/"><input type="image" src="{% static "images/scavenger.png" %}" align = "left" height = "60em" width = "270em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+            </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'index' %}"> Home</a></li>
+            <li><a href="{% url 'how_to_play' %}">How to Play</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'user' %}">Profile</a></li>
+                    <li><a href="{% url 'auth_logout' %}?next=/scavenger/">Logout</a></li>
+
+                {% else %}
+                    <li><a href="{% url 'registration_register' %}">Sign Up</a></li>
+                    <li><a href ="{% url 'auth_login' %}">Login</a></li>
+
+                {% endif %}
+                </ul>
+            </div>
+          </div>
+     </div>
+
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+           <div>
+                {% block body_block %}<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Most Kills</a></li>
+    <li><a href="#tabs-2">Most Days Survived</a></li>
+    <li><a href="#tabs-3">Largest Party</a></li>
+    <li><a href="#tabs-4">Most Games Played</a></li>
+
+  </ul>
+  <div id="tabs-1">
+          {% if mostKills %}
         <ul>
-        {% for users in mostDays %}
-        <li>{{ users }} {{ users.most_days_survived }}</a></li>
+		<ol>
+        {% for users in mostKills %}
+        <li><img src="{{ users.picture.url }}" alt="User image " height="50" width="50"/> {{ users }} {{ users.most_kills }} kills </a></li></br>
         {% endfor %}
+		</ol>
+        </ul>		
+        {% endif %}
+  </div>
+  <div id="tabs-2">
+          {% if mostDays %}
+        <ul>
+		<ol>
+        {% for users in mostDays %}
+		<li><img src="{{ users.picture.url }}" alt="User image " height="50" width="50"/> {{ users }} {{ users.most_days_survived }} days </a></li></br>
+        {% endfor %}
+		</ol>
         </ul>
         {% endif %}
-		
-   <h1>Most Zombie Kills</h1>
-        {% if mostKills %}
-        <ul>
-        {% for users in mostKills %}
-        <li>{{ users }} {{ users.most_kills }}</a></li>
-        {% endfor %}
-        </ul>		
-        {% endif %}
-		
-   <h1>Most Games Played</h1>
-        {% if mostPlays %}
-        <ul>
-        {% for users in mostPlays %}
-        <li>{{ users }} {{ users.games_played }}</a></li>
-        {% endfor %}
-        </ul>		
-        {% endif %}		
-
-   <h1>Most Party Members</h1>
+  </div>
+  <div id="tabs-3">
         {% if mostPeople %}
         <ul>
+		<ol>
         {% for users in mostPeople %}
-        <li>{{ users }} {{ users.most_people }}</a></li>
+        <li><img src="{{ users.picture.url }}" alt="User image " height="50" width="50"/> {{ users }} {{ users.most_people }} people </a></li></br>
         {% endfor %}
+		</ol>
         </ul>		
         {% endif %}		
-		
-{% endblock %}
+  </div>
+  <div id="tabs-4">
+          {% if mostPlays %}
+        <ul>
+		<ol>
+        {% for users in mostPlays %}
+<li><img src="{{ users.picture.url }}" alt="User image " height="50" width="50"/> {{ users }} {{ users.games_played }} games </a></li></br>
+        {% endfor %}
+		</ol>
+        </ul>		
+        {% endif %}	
+  </div>
+</div>{% endblock %}
+                </div>
+        </div>
+        <div class="col-sm-3 col-md-2 sidebar">
+            {% block side_block %}
+            <a href="{% url 'play' %}"><input type="image" src="{% static "images/play_now.jpg" %}" height = "50em" width = "150em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+            <a href="{% url 'leaderboards' %}"> <input type="image" src="{% static "images/leaderboards.jpg" %}" height = "50em" width = "150em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+
+            {% endblock %}
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+ 
+</body>
+</html>

@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     most_kills = models.IntegerField(default=0)
     most_people = models.IntegerField(default=0)
     current_game = models.CharField(max_length=1024,null=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.ImageField(upload_to='profile_images', default='data/profile.png')
 
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
@@ -33,8 +33,8 @@ class Badge(models.Model):
 class Achievement(models.Model):
     badge = models.ForeignKey(Badge)
     player = models.ForeignKey(UserProfile)
-    date = models.DateTimeField()
-
+    date = models.DateTimeField(null=True)
+	
     def __unicode__(self):
         return self.player.name
 

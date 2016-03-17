@@ -8,18 +8,18 @@ from zombie.models import Achievement, Badge, UserProfile
 from django.contrib.auth.models import User
 
 def populate():
-    kyle_user = add_user('Keyisle','Keyisle@gmail.com','password','21','73','64','99','','data/profile.png')
-    leif_user = add_user('Leif','Leif@gmail.com','password','110', '290','230','60','','data/profile.png')
-    three_user = add_user('Bob','Bob@gmail.com','password','51','4','23','6','','data/profile.png')
-    four_user = add_user('Bill','Bill@gmail.com','password','31','88','45','62','','data/profile.png')
-    five_user = add_user('Guy','Guy@gmail.com','password','11','48','25','62','','data/profile.png')
-    six_user = add_user('Gal','Gal@gmail.com','password','34','23','55','45','','data/profile.png')
-    seven_user = add_user('noob','noob@gmail.com','password','1','1','1','1','','data/profile.png')
-    eight_user = add_user('robot','robot@gmail.com','password','101','11','100','1','','data/profile.png')
-    nine_user = add_user('tom','tom@gmail.com','password','3','2','5','5','','data/profile.png')
-    ten_user = add_user('wad2','wad2@gmail.com','password','340','223','155','451','','data/profile.png')
-    
-    gold_survival = add_badge('Gold Survivor','survive for 15 days','survival','15','3','data/goldSurvival.png')
+	kyle_user = add_user('Keyisle','Keyisle@gmail.com','password','15','5','10','5','','data/profile.png')
+	leif_user = add_user('Leif','Leif@gmail.com','password','110', '290','230','60','','data/zombie.jpg')
+	three_user = add_user('Bob','Bob@gmail.com','password','51','4','23','6','','data/bird.png')
+	four_user = add_user('Bill','Bill@gmail.com','password','31','88','45','62','','data/penguin.png')
+	five_user = add_user('Guy','Guy@gmail.com','password','11','48','25','62','','data/mario.jpg')
+	six_user = add_user('Gal','Gal@gmail.com','password','34','23','55','45','','data/person.png')
+	seven_user = add_user('noob','noob@gmail.com','password','1','1','1','1','','data/noob.png')
+	eight_user = add_user('robot','robot@gmail.com','password','101','11','100','1','','data/robot.png')
+	nine_user = add_user('tom','tom@gmail.com','password','3','2','5','5','','data/dog.jpg')
+	ten_user = add_user('wad2','wad2@gmail.com','password','340','223','155','451','','data/owl.png')
+	
+	gold_survival = add_badge('Gold Survivor','survive for 15 days','survival','15','3','data/goldSurvival.png')
 	silver_survival = add_badge('Silver Survivor','survive for 10 days','survival','10','2','data/silverSurvival.png')
 	bronze_survival = add_badge('Bronze Survivor','survive for 5 days','survival','5','1','data/bronzeSurvival.png')
 	
@@ -29,11 +29,21 @@ def populate():
 	
 	gold_stamina = add_badge('Gold Stamina','play 15 games','stamina','15','3','data/goldStamina.png')
 	silver_stamina = add_badge('Silver Stamina','play 10 games','stamina','10','2','data/silverStamina.png')
-	bronze_stamina add_badge('Bronze Stamina','play 5 games','stamina','5','1','data/bronzeStamina.png')
+	bronze_stamina = add_badge('Bronze Stamina','play 5 games','stamina','5','1','data/bronzeStamina.png')
 	
 	gold_killer = add_badge('Gold Killer','kill 15 zombies','kills','15','3','data/goldKiller.png')
-	silver_ killer = add_badge('Silver Killer','kill 10 zombies','kills','10','2','data/silverKiller.png')
+	silver_killer = add_badge('Silver Killer','kill 10 zombies','kills','10','2','data/silverKiller.png')
 	bronze_killer = add_badge('Bronze Killer','kill 5 zombies','kills','5','1','data/bronzeKiller.png')
+	
+	a1 = add_achievement(gold_stamina,kyle_user,date=None)
+	a2 = add_achievement(silver_stamina,kyle_user,date=None)
+	a3 = add_achievement(bronze_stamina,kyle_user,date=None)
+	a4 = add_achievement(bronze_survival,kyle_user,date=None)	
+	a5 = add_achievement(silver_killer,kyle_user,date=None)
+	a6 = add_achievement(bronze_killer,kyle_user,date=None)
+	a7 = add_achievement(bronze_party,kyle_user,date=None)	
+	
+	
 	
 def add_badge(name,desc,Btype,criteria,level,icon):
     b = Badge.objects.get_or_create(name=name)[0]
@@ -47,7 +57,8 @@ def add_badge(name,desc,Btype,criteria,level,icon):
 
 def add_user(usern,email,passw,games_played,most_days_survived,most_kills,most_people,current_game,picture):
     try:
-        u = User.objects.get(username=usern)
+		u = User.objects.get(username=usern)
+		up = UserProfile(user=u)
     except:
         u = User(username=usern, email=email)
         u.set_password(passw)
@@ -60,6 +71,7 @@ def add_user(usern,email,passw,games_played,most_days_survived,most_kills,most_p
         up.current_game = current_game
         up.picture = picture
         up.save()
+    return up
 
 def add_achievement(badge,player,date):
     a = Achievement.objects.get_or_create(badge=badge,player=player)[0]
@@ -69,5 +81,5 @@ def add_achievement(badge,player,date):
 
 # Start execution here!
 if __name__ == '__main__':
-    print "Starting Rango population script..."
+    print "Starting zombie population script..."
     populate()
