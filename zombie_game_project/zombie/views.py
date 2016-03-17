@@ -39,7 +39,15 @@ def fill_dict(g):
                         'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                    'time_left':g.time_left,'update_state':g.update_state, }
     return context_dict
-	
+
+def check(request,g):
+    if g.is_day_over():
+        g.end_day()
+        g.start_new_day()
+    if g.is_game_over():
+        context_dict = {}
+        return render(request, 'zombie/play.html',context_dict)
+
 def play(request):
     g = Game()
     g.start_new_day()
@@ -62,23 +70,18 @@ def turn(request,action,num):
         g.take_turn(action, num)
     else:
         g.take_turn(action)
-    if g.is_day_over():
-        g.end_day()
-        g.start_new_day()
-    if g.is_game_over():
-        context_dict = {}
-        return render(request, 'zombie/play.html',context_dict)
+    check(request,g)
     context_dict = fill_dict(g)
     return render(request, 'zombie/play.html',context_dict)
 
 
 def leaderboards(request):
-	mostDays = UserProfile.objects.order_by('-most_days_survived')[:20]
-	mostKills = UserProfile.objects.order_by('-most_kills')[:20]
-	mostPeople = UserProfile.objects.order_by('-most_people')[:20]
-	mostPlays = UserProfile.objects.order_by('-games_played')[:20]
-	context_dict = {'mostPlays': mostPlays,'mostDays': mostDays, 'mostKills': mostKills, 'mostPeople': mostPeople}
-	return render(request, 'zombie/leaderboards.html', context_dict)
+    mostDays = UserProfile.objects.order_by('-most_days_survived')[:20]
+    mostKills = UserProfile.objects.order_by('-most_kills')[:20]
+    mostPeople = UserProfile.objects.order_by('-most_people')[:20]
+    mostPlays = UserProfile.objects.order_by('-games_played')[:20]
+    context_dict = {'mostPlays': mostPlays,'mostDays': mostDays, 'mostKills': mostKills, 'mostPeople': mostPeople}
+    return render(request, 'zombie/leaderboards.html', context_dict)
 
 def how_to_play(request ):
     return render(request,"zombie/how_to_play.html",{})
