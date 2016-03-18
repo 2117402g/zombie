@@ -59,23 +59,24 @@ def check(request,g):
 
 @login_required
 def play(request):
-    g = Game()
-    g.start_new_day()
     up = UserProfile(user= User.objects.get(username = request.user))
-    if up.current_game != "":
-        cg = up.current_game
+    if up.current_game != None:
+        g = pickle.loads(up.current_game)
+        check(request,g)
         # load up states
         # check if game is over
     else:
+        g = Game()
         g.start_new_day()
     context_dict = fill_dict(g)
     copy_reg.pickle(types.MethodType, _pickle_method)
-    p = pickle.dumps(g)
-    up.current_game = p
+    up.current_game = pickle.dumps(g)
+    print up.current_game
     return render(request,'zombie/play.html',context_dict)
 
 def turn(request,action,num):
-    g = Game()
+    up = UserProfile(user= User.objects.get(username = request.user))
+    g = pickle.loads(up.current_game)
     action = str(action)
     if action in ['MOVE','SEARCH']:
         num = int(num)
