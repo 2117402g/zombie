@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.template import RequestContext
 
+import copy_reg
+import types
 from zombie.models import UserProfile, User, Achievement
 from engine.game import Game
 import pickle
@@ -40,6 +42,13 @@ def fill_dict(g):
                    'time_left':g.time_left,'update_state':g.update_state, }
     return context_dict
 
+def _pickle_method(m):
+    if m.im_self is None:
+        return getattr, (m.im_class, m.im_func.func_name)
+    else:
+        return getattr, (m.im_self, m.im_func.func_name)
+
+
 def check(request,g):
     if g.is_day_over():
         g.end_day()
@@ -60,11 +69,9 @@ def play(request):
     else:
         g.start_new_day()
     context_dict = fill_dict(g)
-    pps = pickle.dumps(g.player_state)
-    pus = pickle.dumps(g.update_state)
-    ps = pickle.dumps(g.street)
-    pgs = pickle.dumps(g.game_state)
-    up.current_game = "hi" #[pps,pus,ps,pgs]
+    copy_reg.pickle(types.MethodType, _pickle_method)
+    p = pickle.dumps(g)
+    up.current_game = p
     return render(request,'zombie/play.html',context_dict)
 
 def turn(request,action,num):
