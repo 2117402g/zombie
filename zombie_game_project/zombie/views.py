@@ -95,8 +95,8 @@ def turn(request,action,num):
     elif g.is_day_over():
         g.end_day()
         context_dict = {"end_of":g.player_state.days, 'player':g.player_state}
-        _save(up,g)
         g.start_new_day()
+        _save(up,g)
         return render(request,'zombie/play.html',context_dict)
     context_dict = fill_dict(g)
     _save(up,g)
