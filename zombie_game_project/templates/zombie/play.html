@@ -3,19 +3,48 @@
 {% load staticfiles %}
 
 {% block body_block %}
-    {{ game }}  </br>
-    {% if  street  %}
-        {{ street }} </br>
-        {% for house in house_list  %}
-            {{ house }}</br>
-        {% endfor %}
-        {{ player }} </br>
-        Day: {{player.days}}, Time left in day: {{time_left}}
-        {% if move_options %}
-            {% for move in move_options %}
-                <li><a href="/scavenger/turn/MOVE/{{move}}">MOVE</a></li>
+    {% if game_over %}
+        <h1> GAME OVER </h1>
+    {% elif end_of %}
+        <h1> END OF DAY {{end_of}}</h1>
+        <li> {{player}}</li>
+        <li><a href="{% url 'play' %}">Next Day</a></li>
+    {% else %}
+        {{ game }}  </br>
+        {% if  street  %}
+            {{ street }} </br>
+            {% for house in house_list  %}
+                {{ house }}</br>
             {% endfor %}
+            {{ player }} </br>
+            Day: {{player.days}}, Time left in day: {{time_left}}
+            {% if move_options %}
+                {% for move in move_options %}
+                    <li><a href="/scavenger/turn/MOVE/{{move}}">MOVE</a></li>
+                {% endfor %}
+            {% endif %}
+            <li><a href="/scavenger/turn/ENTER/0">ENTER</a></li>
+            <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
+        {% elif house %}
+            {{ update_state }} </br>
+            {{ player }} </br>
+            Day: {{player.days}}, Time left in day: {{time_left}} </br>
+            {% if search_options %}
+                {% for search in search_options %}
+                    <li><a href="/scavenger/turn/SEARCH/{{search}}">SEARCH</a></li>
+                {% endfor %}
+            {% endif %}
+            <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
+            <li><a href="/scavenger/turn/EXIT/0">EXIT</a></li>
+        {% elif num_zombies %}
+            {{ player }} </br>
+            Day: {{player.days}}, Time left in day: {{time_left}} </br>
+            zaarrrr rrrgh: {num_zombies} Zombies!!!! </br>
+            <li><a href="/scavenger/turn/FIGHT/0">FIGHT</a></li>
+            <li><a href="/scavenger/turn/RUN/0">RUN</a></li>
+            <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
         {% endif %}
+<<<<<<< HEAD
         <li><a href="/scavenger/turn/ENTER/0"> ENTER</a></li>
         <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
     {% elif house %}
@@ -75,4 +104,8 @@
 	{%endfor%}
 	{% endif%}
 		
+=======
+    {% endif %}
+    <li><a href="{% url 'new_game' %}">New Game</a></li>
+>>>>>>> f41bf888b160be541661ec4f21f398ce6429156a
 {% endblock %}

@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.template import RequestContext
 
+import copy_reg
+import types
 from zombie.models import UserProfile, User, Achievement
 from engine.game import Game
 import pickle
@@ -19,8 +21,12 @@ def fill_dict(g):
     if g.game_state == 'STREET':
         context_dict = {'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                    'time_left':g.time_left,"move_options":[],'street': g.street , 'house_list': g.street.house_list,
+<<<<<<< HEAD
                    'stats': [], 'people': "x"*(min(g.player_state.party,30)), 'current_house': g.street.get_current_house(),'update_state':g.update_state,}
         # print g.street.get_current_house()
+=======
+                   'current_house': g.street.get_current_house(),'update_state':g.update_state,}
+>>>>>>> f41bf888b160be541661ec4f21f398ce6429156a
         i = 0
         for house in g.street.house_list:
 				context_dict['stats'].append([house.num_of_rooms,house.get_house_stats()[3],i])
@@ -31,55 +37,92 @@ def fill_dict(g):
                    'time_left':g.time_left,"search_options":[],'current_house':g.street.get_current_house(),
                     'current_room':g.street.get_current_house().get_current_room(),'update_state':g.update_state,
                         'house':True,}
-        i=0
-        while i <= g.street.house_list.num_of_rooms:
-            context_dict["search_options"].append(i)
-            i+=1
+        print g.street.get_current_house().room_list
+        i= 0
+        while i <= len(g.street.get_current_house().room_list):
+           context_dict["search_options"].append(i)
+           print context_dict["search_options"]
+           i += 1
+        #i=0
+        #while i <= g.street.house_list.num_of_rooms:
+         #   context_dict["search_options"].append(i)
+          #  i+=1
     elif g.game_state == 'ZOMBIE':
         context_dict = {'num_zombies':g.street.get_current_house().get_current_room().zombies,
                         'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                    'time_left':g.time_left,'update_state':g.update_state, }
     return context_dict
-	
+
+def _pickle_method(g):
+    if g.im_self is None:
+        return getattr, (g.im_class, g.im_func.func_name)
+    else:
+        return getattr, (g.im_self, g.im_func.func_name)
+
+def _save(up,g):
+    copy_reg.pickle(types.MethodType, _pickle_method)
+    up.current_game = pickle.dumps(g)
+    up.save()
+
+
+
+@login_required
 def play(request):
-    g = Game()
-    g.start_new_day()
-
-    #if games exists
-    # load game is it over?
+    up = UserProfile.objects.get(user= User.objects.get(username = request.user))
+    if up.current_game != None:
+        g = pickle.loads(up.current_game)
+        if g.is_game_over():
+            context_dict = {'game_over':True}
+            return render(request,'zombie/play.html',context_dict)
+        elif g.is_day_over():
+            g.end_day()
+            context_dict = {"end_of":g.player_state.days, 'player':g.player_state}
+            g.start_new_day()
+            _save(up,g)
+            return render(request,'zombie/play.html',context_dict)
+    else:
+        g = Game()
+        g.start_new_day()
     context_dict = fill_dict(g)
-    pps = pickle.dumps(g.player_state)
-    pus = pickle.dumps(g.update_state)
-    ps = pickle.dumps(g.street)
-    pgs = pickle.dumps(g.game_state)
-
+    _save(up,g)
     return render(request,'zombie/play.html',context_dict)
 
 def turn(request,action,num):
-    g = Game()
+    up = UserProfile.objects.get(user= User.objects.get(username = request.user))
+    g = pickle.loads(up.current_game)
     action = str(action)
     if action in ['MOVE','SEARCH']:
         num = int(num)
         g.take_turn(action, num)
     else:
         g.take_turn(action)
-    if g.is_day_over():
-        g.end_day()
-        g.start_new_day()
     if g.is_game_over():
-        context_dict = {}
-        return render(request, 'zombie/play.html',context_dict)
+        context_dict = {'game_over':True}
+        return render(request,'zombie/play.html',context_dict)
+    elif g.is_day_over():
+        g.end_day()
+        context_dict = {"end_of":g.player_state.days, 'player':g.player_state}
+        g.start_new_day()
+        _save(up,g)
+        return render(request,'zombie/play.html',context_dict)
     context_dict = fill_dict(g)
+    _save(up,g)
     return render(request, 'zombie/play.html',context_dict)
+
+def new_game(request):
+    up = UserProfile.objects.get(user= User.objects.get(username = request.user))
+    up.current_game = None
+    up.save()
+    return play(request)
 
 
 def leaderboards(request):
-	mostDays = UserProfile.objects.order_by('-most_days_survived')[:20]
-	mostKills = UserProfile.objects.order_by('-most_kills')[:20]
-	mostPeople = UserProfile.objects.order_by('-most_people')[:20]
-	mostPlays = UserProfile.objects.order_by('-games_played')[:20]
-	context_dict = {'mostPlays': mostPlays,'mostDays': mostDays, 'mostKills': mostKills, 'mostPeople': mostPeople}
-	return render(request, 'zombie/leaderboards.html', context_dict)
+    mostDays = UserProfile.objects.order_by('-most_days_survived')[:20]
+    mostKills = UserProfile.objects.order_by('-most_kills')[:20]
+    mostPeople = UserProfile.objects.order_by('-most_people')[:20]
+    mostPlays = UserProfile.objects.order_by('-games_played')[:20]
+    context_dict = {'mostPlays': mostPlays,'mostDays': mostDays, 'mostKills': mostKills, 'mostPeople': mostPeople}
+    return render(request, 'zombie/leaderboards.html', context_dict)
 
 def how_to_play(request ):
     return render(request,"zombie/how_to_play.html",{})

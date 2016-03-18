@@ -13,16 +13,50 @@
         <div class="page-header">
         	<h1> {{ user.username }}'s Profile</h1>
        </div>
+<<<<<<< HEAD
  
     <h4>
     <div align = "left"> Mugshot:
+=======
+
+       <h4>Email: {{ user.email }}</h4>
+
+
+
+
+    <div align = "left"> Mugshot:
+
+>>>>>>> f41bf888b160be541661ec4f21f398ce6429156a
        		 {% if userprofile.picture %}
 					<img src="{{ userprofile.picture.url }}" alt="User image " height="100" width="100"/>
 			{% else %}
 					None Given
+<<<<<<< HEAD
 
 			{% endif %}</p>
 			<h4>Email: {{ user.email }}</h4>
+=======
+
+			{% endif %}</p>
+			
+
+        <br>
+        <h3> Your Game Statistics </h3>
+     <!-- Display extra information if required -->
+	 
+
+
+    <div align ="right" ><div align="left" style="width:800px;height:200px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">Badges:
+		 {% if achievements %}
+                {% for a in achievements %}
+					<img src="{{ a.badge.icon.url }}" alt="yhuh" height="100" width="100"/>
+                {% endfor %}
+			{% else %}
+					None Earned
+			{% endif %}</div>
+    </div>
+
+>>>>>>> f41bf888b160be541661ec4f21f398ce6429156a
 
         <br>
         <h3> Your Game Statistics </h3>
@@ -31,9 +65,14 @@
        <p> Games Played:
        		{% if userprofile.games_played %}
 					{{ userprofile.games_played}}
+<<<<<<< HEAD
+=======
+
+>>>>>>> f41bf888b160be541661ec4f21f398ce6429156a
 			{% else %}
 			Zero
 			{% endif %}</p>
+<<<<<<< HEAD
 			
        <p> Most Days Survived:
        		{% if userprofile.most_days_survived %}
@@ -58,6 +97,35 @@
 			</div>	
 		<h3>Badges:</h3>	
     <div align ="left" ><div align="left" style="width:625px;height:200px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
+=======
+
+        <p> Most Days Survived:
+       		 {% if userprofile.most_days_survived %}
+
+					{{ userprofile.most_days_survived}}</a>
+
+			{% else %}
+					Zero
+			{% endif %}</p>
+        <p> Most Party Members:
+       		 {% if userprofile.most_people %}
+					{{ userprofile.most_people}}</a>
+
+			{% else %}
+					Zero
+			{% endif %}</p>
+
+        <p> Zombie Kills:
+       		 {% if userprofile.most_kills %}
+					{{ userprofile.most_kills}}</a>
+			{% else %}
+					Zero
+			{% endif %}</p>
+			
+
+
+    <div id="badges1">Badges:
+>>>>>>> f41bf888b160be541661ec4f21f398ce6429156a
 		 {% if achievements %}
                 {% for a in achievements %}
 					<img src="{{ a.badge.icon.url }}" alt="yhuh" height="100" width="100"/>
@@ -73,7 +141,10 @@
     </h4>
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> f41bf888b160be541661ec4f21f398ce6429156a
 {% endblock %}

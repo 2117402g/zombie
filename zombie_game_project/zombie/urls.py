@@ -7,5 +7,6 @@ urlpatterns = patterns('',
         url(r'^leaderboards/', views.leaderboards, name='leaderboards'),
         url(r'^user/', views.profile, name='user'),
         url(r'^play/', views.play, name='play'),
+        url(r'^new_game/', views.new_game, name='new_game'),
         url(r'^turn/(?P<action>[A-Z]+)/(?P<num>[0-9]+)/', views.turn, name='turn')
                        )
