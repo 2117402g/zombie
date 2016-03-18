@@ -17,11 +17,11 @@ def index(request):
     return render(request, 'zombie/index.html', context_dict)
 
 def fill_dict(g):
+
     if g.game_state == 'STREET':
         context_dict = {'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                    'time_left':g.time_left,"move_options":[],'street': g.street , 'house_list': g.street.house_list,
                    'current_house': g.street.get_current_house(),'update_state':g.update_state,}
-        print g.street.get_current_house()
         i = 0
         for house in g.street.house_list:
             if house != g.street.get_current_house():
@@ -57,22 +57,22 @@ def _save(up,g):
     up.current_game = pickle.dumps(g)
     up.save()
 
-def check(request,g):
-    if g.is_day_over():
-        g.end_day()
-        g.start_new_day()
-    if g.is_game_over():
-        context_dict = {}
-        return render(request, 'zombie/play.html',context_dict)
+
 
 @login_required
 def play(request):
     up = UserProfile.objects.get(user= User.objects.get(username = request.user))
     if up.current_game != None:
         g = pickle.loads(up.current_game)
-        check(request,g)
-        # load up states
-        # check if game is over
+        if g.is_game_over():
+            context_dict = {'game_over':True}
+            return render(request,'zombie/play.html',context_dict)
+        elif g.is_day_over():
+            g.end_day()
+            context_dict = {"end_of":g.player_state.days, 'player':g.player_state}
+            g.start_new_day()
+            _save(up,g)
+            return render(request,'zombie/play.html',context_dict)
     else:
         g = Game()
         g.start_new_day()
@@ -89,10 +89,24 @@ def turn(request,action,num):
         g.take_turn(action, num)
     else:
         g.take_turn(action)
-    check(request,g)
+    if g.is_game_over():
+        context_dict = {'game_over':True}
+        return render(request,'zombie/play.html',context_dict)
+    elif g.is_day_over():
+        g.end_day()
+        context_dict = {"end_of":g.player_state.days, 'player':g.player_state}
+        _save(up,g)
+        g.start_new_day()
+        return render(request,'zombie/play.html',context_dict)
     context_dict = fill_dict(g)
     _save(up,g)
     return render(request, 'zombie/play.html',context_dict)
+
+def new_game(request):
+    up = UserProfile.objects.get(user= User.objects.get(username = request.user))
+    up.current_game = None
+    up.save()
+    return play(request)
 
 
 def leaderboards(request):
