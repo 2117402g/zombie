@@ -32,22 +32,30 @@ def fill_dict(g):
                    'time_left':g.time_left,"search_options":[],'current_house':g.street.get_current_house(),
                     'current_room':g.street.get_current_house().get_current_room(),'update_state':g.update_state,
                         'house':True,}
-        i=0
-        while i <= g.street.house_list.num_of_rooms:
-            context_dict["search_options"].append(i)
-            i+=1
+        #i= 0
+        #for room in House(g).room_list:
+         #  context_dict["search_options"].append(i)
+          # i += 1
+        #i=0
+        #while i <= g.street.house_list.num_of_rooms:
+         #   context_dict["search_options"].append(i)
+          #  i+=1
     elif g.game_state == 'ZOMBIE':
         context_dict = {'num_zombies':g.street.get_current_house().get_current_room().zombies,
                         'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                    'time_left':g.time_left,'update_state':g.update_state, }
     return context_dict
 
-def _pickle_method(m):
-    if m.im_self is None:
-        return getattr, (m.im_class, m.im_func.func_name)
+def _pickle_method(g):
+    if g.im_self is None:
+        return getattr, (g.im_class, g.im_func.func_name)
     else:
-        return getattr, (m.im_self, m.im_func.func_name)
+        return getattr, (g.im_self, g.im_func.func_name)
 
+def _save(up,g):
+    copy_reg.pickle(types.MethodType, _pickle_method)
+    up.current_game = pickle.dumps(g)
+    up.save()
 
 def check(request,g):
     if g.is_day_over():
@@ -59,7 +67,7 @@ def check(request,g):
 
 @login_required
 def play(request):
-    up = UserProfile(user= User.objects.get(username = request.user))
+    up = UserProfile.objects.get(user= User.objects.get(username = request.user))
     if up.current_game != None:
         g = pickle.loads(up.current_game)
         check(request,g)
@@ -69,13 +77,11 @@ def play(request):
         g = Game()
         g.start_new_day()
     context_dict = fill_dict(g)
-    copy_reg.pickle(types.MethodType, _pickle_method)
-    up.current_game = pickle.dumps(g)
-    print up.current_game
+    _save(up,g)
     return render(request,'zombie/play.html',context_dict)
 
 def turn(request,action,num):
-    up = UserProfile(user= User.objects.get(username = request.user))
+    up = UserProfile.objects.get(user= User.objects.get(username = request.user))
     g = pickle.loads(up.current_game)
     action = str(action)
     if action in ['MOVE','SEARCH']:
@@ -85,6 +91,7 @@ def turn(request,action,num):
         g.take_turn(action)
     check(request,g)
     context_dict = fill_dict(g)
+    _save(up,g)
     return render(request, 'zombie/play.html',context_dict)
 
 
