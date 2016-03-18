@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 
+<title>Scavenger</title>
 <html lang="en">
     <head>
     <meta charset="utf-8">
@@ -8,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
-
+    <link rel="icon" href="{%  static 'favicon.ico' %}" />
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
 
@@ -17,6 +17,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 
 
   <style>
@@ -35,6 +36,9 @@
       }
   </style>
 
+
+
+	 
   </head>
     <body>
 
@@ -52,7 +56,6 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url 'index' %}"> Home</a></li>
-            <li><a href="{% url 'how_to_play' %}">How to Play</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'user' %}">Profile</a></li>
                     <li><a href="{% url 'auth_logout' %}">Logout</a></li>
@@ -75,9 +78,9 @@
         </div>
         <div class="col-sm-3 col-md-2 sidebar">
             {% block side_block %}
-            <a href="{% url 'play' %}"><input type="image" src="{% static "images/play_now.jpg" %}" height = "50em" width = "150em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
-            <a href="{% url 'leaderboards' %}"> <input type="image" src="{% static "images/leaderboards.jpg" %}" height = "50em" width = "150em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
-
+            <a href="{% url 'play' %}"><input type="image" src="{% static "images/play_now.jpg" %}" height = "75em" width = "225em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+            <a href="{% url 'leaderboards' %}"> <input type="image" src="{% static "images/leaderboards.png" %}" height = "75em" width = "225em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+            <a href="{% url 'how_to_play' %}"> <input type="image" src="{% static "images/howtoplay.png" %}" height = "75em" width = "225em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
             {% endblock %}
 
         </div>

@@ -14,17 +14,18 @@ def index(request):
     context_dict = {}
     return render(request, 'zombie/index.html', context_dict)
 
+	
 def fill_dict(g):
     if g.game_state == 'STREET':
         context_dict = {'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                    'time_left':g.time_left,"move_options":[],'street': g.street , 'house_list': g.street.house_list,
-                   'current_house': g.street.get_current_house(),'update_state':g.update_state,}
-        print g.street.get_current_house()
+                   'stats': [], 'people': "x"*(min(g.player_state.party,30)), 'current_house': g.street.get_current_house(),'update_state':g.update_state,}
+        # print g.street.get_current_house()
         i = 0
         for house in g.street.house_list:
-            if house != g.street.get_current_house():
-                context_dict["move_options"].append(i)
-            i += 1
+				context_dict['stats'].append([house.num_of_rooms,house.get_house_stats()[3],i])
+				context_dict["move_options"].append(i)
+				i += 1
     elif g.game_state == 'HOUSE':
         context_dict = {'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                    'time_left':g.time_left,"search_options":[],'current_house':g.street.get_current_house(),
@@ -82,7 +83,7 @@ def leaderboards(request):
 
 def how_to_play(request ):
     return render(request,"zombie/how_to_play.html",{})
-
+		
 
 @login_required
 def profile(request):
@@ -93,12 +94,10 @@ def profile(request):
         up = UserProfile.objects.get(user=u)
     except:
         up = None
-	
     try:
 		a = Achievement.objects.filter(player=up)
     except:
 		a = None
-		print "fail"
 		
     context_dict['user'] = u
     context_dict['userprofile'] = up

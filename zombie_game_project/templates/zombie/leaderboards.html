@@ -2,14 +2,14 @@
 <html lang="en">
 {% load staticfiles %}
 
-
+<title>Scavenger</title>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=2">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+  <link rel="icon" href="{%  static 'favicon.ico' %}" />
 
   <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
@@ -51,19 +51,16 @@
              <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-<<<<<<< HEAD
+
             <a class="navbar-header" href="/scavenger/"><input type="image" src="{% static "images/scavenger.png" %}" align = "left" height = "60em" width = "270em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
-=======
-            <a class="navbar-header" href="/scavenger/"><input type="image" src="{% static "images/scavenger.jpg" %}" align = "left" height = "60em" width = "270em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
->>>>>>> f899f9f90a0c45e38f81511649014ec388ec3f6f
+
             </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url 'index' %}"> Home</a></li>
-            <li><a href="{% url 'how_to_play' %}">How to Play</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'user' %}">Profile</a></li>
-                    <li><a href="{% url 'auth_logout' %}?next=/scavenger/">Logout</a></li>
+                    <li><a href="{% url 'auth_logout' %}">Logout</a></li>
 
                 {% else %}
                     <li><a href="{% url 'registration_register' %}">Sign Up</a></li>
@@ -135,8 +132,9 @@
         </div>
         <div class="col-sm-3 col-md-2 sidebar">
             {% block side_block %}
-            <a href="{% url 'play' %}"><input type="image" src="{% static "images/play_now.jpg" %}" height = "50em" width = "150em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
-            <a href="{% url 'leaderboards' %}"> <input type="image" src="{% static "images/leaderboards.jpg" %}" height = "50em" width = "150em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+            <a href="{% url 'play' %}"><input type="image" src="{% static "images/play_now.jpg" %}" height = "75em" width = "225em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+            <a href="{% url 'leaderboards' %}"> <input type="image" src="{% static "images/leaderboards.png" %}" height = "75em" width = "225em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+			<a href="{% url 'how_to_play' %}"> <input type="image" src="{% static "images/howtoplay.png" %}" height = "75em" width = "225em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
 
             {% endblock %}
 
