@@ -21,12 +21,8 @@ def fill_dict(g):
     if g.game_state == 'STREET':
         context_dict = {'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                    'time_left':g.time_left,"move_options":[],'street': g.street , 'house_list': g.street.house_list,
-<<<<<<< HEAD
                    'stats': [], 'people': "x"*(min(g.player_state.party,30)), 'current_house': g.street.get_current_house(),'update_state':g.update_state,}
-        # print g.street.get_current_house()
-=======
-                   'current_house': g.street.get_current_house(),'update_state':g.update_state,}
->>>>>>> f41bf888b160be541661ec4f21f398ce6429156a
+
         i = 0
         for house in g.street.house_list:
 				context_dict['stats'].append([house.num_of_rooms,house.get_house_stats()[3],i])
@@ -37,16 +33,11 @@ def fill_dict(g):
                    'time_left':g.time_left,"search_options":[],'current_house':g.street.get_current_house(),
                     'current_room':g.street.get_current_house().get_current_room(),'update_state':g.update_state,
                         'house':True,}
-        print g.street.get_current_house().room_list
         i= 0
         while i <= len(g.street.get_current_house().room_list):
            context_dict["search_options"].append(i)
-           print context_dict["search_options"]
            i += 1
-        #i=0
-        #while i <= g.street.house_list.num_of_rooms:
-         #   context_dict["search_options"].append(i)
-          #  i+=1
+
     elif g.game_state == 'ZOMBIE':
         context_dict = {'num_zombies':g.street.get_current_house().get_current_room().zombies,
                         'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
