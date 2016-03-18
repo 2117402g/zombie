@@ -17,7 +17,6 @@ def index(request):
     return render(request, 'zombie/index.html', context_dict)
 
 def fill_dict(g):
-
     if g.game_state == 'STREET':
         context_dict = {'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                    'time_left':g.time_left,"move_options":[],'street': g.street , 'house_list': g.street.house_list,
@@ -32,10 +31,12 @@ def fill_dict(g):
                    'time_left':g.time_left,"search_options":[],'current_house':g.street.get_current_house(),
                     'current_room':g.street.get_current_house().get_current_room(),'update_state':g.update_state,
                         'house':True,}
-        #i= 0
-        #for room in House(g).room_list:
-         #  context_dict["search_options"].append(i)
-          # i += 1
+        print g.street.get_current_house().room_list
+        i= 0
+        while i <= len(g.street.get_current_house().room_list):
+           context_dict["search_options"].append(i)
+           print context_dict["search_options"]
+           i += 1
         #i=0
         #while i <= g.street.house_list.num_of_rooms:
          #   context_dict["search_options"].append(i)
