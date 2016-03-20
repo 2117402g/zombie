@@ -100,14 +100,15 @@ def turn(request,action,num):
         up.most_kills = max(up.most_kills,context_dict['kills'])
         up.most_people = max(up.most_people,context_dict['party'])
         up.most_days_survived = max(up.most_days_survived,context_dict['days'])	
+        context_dict = {"end_of":g.player_state.days, 'player':g.player_state, 'badges' : []}
         for b in badges:
              if ((b.Btype == 'most_kills' and up.most_kills >= b.criteria) or (b.Btype == 'most_people' and up.most_people >= b.criteria) or (b.Btype == 'most_days_survived' and up.most_days_survived >= b.criteria)):
                  try:
                       a = Achievement.objects.get(badge=b,player=up)
                  except:
                       a = Achievement.objects.create(badge=b,player=up,date=datetime.datetime.now())
+                      context_dict['badges'].append(b)
                       a.save()		
-        context_dict = {"end_of":g.player_state.days, 'player':g.player_state}
         g.start_new_day()
         _save(up,g)
         return render(request,'zombie/play.html',context_dict)
@@ -133,7 +134,11 @@ def leaderboards(request):
 
 def how_to_play(request ):
     return render(request,"zombie/how_to_play.html",{})
-		
+	
+@login_required
+def change_email(request):
+	return render(request,"registration/change_email.html",{})	
+	
 
 @login_required
 def profile(request):
@@ -152,4 +157,5 @@ def profile(request):
     context_dict['user'] = u
     context_dict['userprofile'] = up
     context_dict['achievements'] = a
+    context_dict['no'] = len(a)*100
     return render_to_response('zombie/user.html', context_dict, context)

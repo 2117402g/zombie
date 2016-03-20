@@ -59,12 +59,12 @@
 			{% endif %}</p>
 			</div>	
 		<h3>Badges:</h3>	
-    <div align ="left" ><div align="left" style="width:625px;height:200px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
+    <div align ="left" ><div align="left" style="width:625px;height:{{no}}px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
 
 		 {% if achievements %}
                 {% for a in achievements %}
 					<img src="{{ a.badge.icon.url }}" alt="yhuh" height="100" width="100"/>
-					{{ a.date }}
+					{{a.badge.name}} ({{a.badge.desc}}), earned on {{ a.date }}</br>
                 {% endfor %}
 			{% else %}
 					None Earned
