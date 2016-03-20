@@ -11,6 +11,9 @@
         <li><a href="{% url 'play' %}">Next Day</a></li>
     {% else %}
         {{ game }}  </br>
+        {% if update_state %}
+            {{ update_state }} </br>
+        {% endif %}
         {% if  street  %}
             {{ street }} </br>
             {{ player }} </br>
@@ -18,7 +21,6 @@
             <li><a href="/scavenger/turn/ENTER/0">ENTER</a></li>
             <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
         {% elif house %}
-            {{ update_state }} </br>
             {{ player }} </br>
             Day: {{player.days}}, Time left in day: {{time_left}} </br>
             {% if search_options %}

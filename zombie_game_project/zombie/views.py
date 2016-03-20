@@ -25,7 +25,7 @@ def fill_dict(g):
         context_dict.update({'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
                    'time_left':g.time_left,"move_options":[],'street': g.street , 'house_list': g.street.house_list,
                    'stats': [], 'people': "x"*(min(g.player_state.party,30)), 'current_house': g.street.get_current_house(),
-				   'update_state':g.update_state})
+				   })
         i = 0
         for house in g.street.house_list:
 				context_dict['stats'].append([house.num_of_rooms,house.get_house_stats()[3],i])
@@ -44,7 +44,7 @@ def fill_dict(g):
     elif g.game_state == 'ZOMBIE':
         context_dict.update({'num_zombies':g.street.get_current_house().get_current_room().zombies,
                         'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
-                   'time_left':g.time_left,'update_state':g.update_state})
+                   'time_left':g.time_left})
     return context_dict
 
 def _pickle_method(g):
@@ -112,6 +112,7 @@ def turn(request,action,num):
         _save(up,g)
         return render(request,'zombie/play.html',context_dict)
     _save(up,g)
+    context_dict['update_state'] = g.update_state
     return render(request, 'zombie/play.html',context_dict)
 
 def new_game(request):
