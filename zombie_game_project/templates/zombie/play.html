@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+    {% if game_over %}
+        <h1> GAME OVER </h1>
+    {% elif end_of %}
+        <h1> END OF DAY {{end_of}}</h1>
+        <li> {{player}}</li>
+        <li><a href="{% url 'play' %}">Next Day</a></li>
+    {% else %}
+        {{ game }}  </br>
+        {% if  street  %}
+            {{ street }} </br>
+            {{ player }} </br>
+            Day: {{player.days}}, Time left in day: {{time_left}}
+            <li><a href="/scavenger/turn/ENTER/0">ENTER</a></li>
+            <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
+        {% elif house %}
+            {{ update_state }} </br>
+            {{ player }} </br>
+            Day: {{player.days}}, Time left in day: {{time_left}} </br>
+            {% if search_options %}
+				<img src="/static/images/zombies/0.jpg" alt="User image " height="400" width="400"/>
+                {% for search in search_options %}
+                    <li><a href="/scavenger/turn/SEARCH/{{search}}">SEARCH</a></li>
+                {% endfor %}
+            {% endif %}
+            <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
+            <li><a href="/scavenger/turn/EXIT/0">EXIT</a></li>
+        {% elif num_zombies %}
+            {{ player }} </br>
+            Day: {{player.days}}, Time left in day: {{time_left}} </br>
+            zaarrrr rrrgh: {{num_zombies}} Zombies!!!! </br>
+			<img src="/static/images/zombies/{{num_zombies}}.jpg" alt="User image " height="400" width="400"/>
+            <li><a href="/scavenger/turn/FIGHT/0">FIGHT</a></li>
+            <li><a href="/scavenger/turn/RUN/0">RUN</a></li>
+        {% endif %}
+
+    {% for rooms,zombies,i in stats %}
+	{% if rooms < 9 %}
+	{% if zombies < 5 %}
+	<a href="/scavenger/turn/MOVE/{{i}}"><input type="image" src="{% static "images/small.jpg" %}" height = "100em" width = "133em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+	{% elif zombies < 10 %}
+	<a href="/scavenger/turn/MOVE/{{i}}"><input type="image" src="{% static "images/smallRuined.jpg" %}" height = "100em" width = "133em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+	{% else %}
+	<a href="/scavenger/turn/MOVE/{{i}}"><input type="image" src="{% static "images/smallRuined1.jpg" %}" height = "100em" width = "133em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+	{% endif%}
+	{% elif rooms < 12 %}
+	{% if zombies < 5 %}
+	<a href="/scavenger/turn/MOVE/{{i}}"><input type="image" src="{% static "images/medium.jpg" %}" height = "100em" width = "133em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+	{% elif zombies < 10 %}
+	<a href="/scavenger/turn/MOVE/{{i}}"><input type="image" src="{% static "images/mediumRuined.jpg" %}" height = "100em" width = "133em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+	{% else %}
+	<a href="/scavenger/turn/MOVE/{{i}}"><input type="image" src="{% static "images/mediumRuined1.jpg" %}" height = "100em" width = "133em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+	{% endif%}
+	{% else %}
+	{% if zombies < 5 %}
+	<a href="/scavenger/turn/MOVE/{{i}}"><input type="image" src="{% static "images/large.jpg" %}" height = "100em" width = "133em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+	{% elif zombies < 10 %}
+	<a href="/scavenger/turn/MOVE/{{i}}"><input type="image" src="{% static "images/largeRuined.jpg" %}" height = "100em" width = "133em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+	{% else %}
+	<a href="/scavenger/turn/MOVE/{{i}}"><input type="image" src="{% static "images/largeRuined1.jpg" %}" height = "100em" width = "133em" name="saveForm" class="btTxt submit" id="saveForm" /></a>
+	{% endif %}
+	{% endif %}
+	{% endfor %}
+	</br>
+
+	{% if people %}
+	<img src="/static/images/road.png" alt="User image " height="50" width="1100"/>
+	</br>
+	{% for party in people %}
+		<td class="{% cycle '1' '2' '3' '4' '5' as p %}"></td>
+		<img src="/static/images/party/{{p}}.png" alt="User image " height="50" width="25"/>
+	{%endfor%}
+	{% endif%}
+		
+    {% endif %}
+    <li><a href="{% url 'new_game' %}">New Game</a></li>
+{% endblock %}
