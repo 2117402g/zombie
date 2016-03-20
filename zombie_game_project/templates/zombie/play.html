@@ -10,18 +10,40 @@
         <li> {{player}}</li>
 			{% for b in badges %}
 				<img src="{{ b.icon.url }}" alt="yhuh" height="100" width="100"/> You earned the {{b.name}} badge! ({{b.desc}})
-				</br>
 			{% endfor %}
         <li><a href="{% url 'play' %}">Next Day</a></li>
     {% else %}
         {{ game }}  </br>
-        {% if update_state %}
-            {{ update_state }} </br>
+
+		{% if update_ammo %}
+        {% if update_ammo > 0 %}
+            Gained {{ update_ammo }} ammo!
+		{% elif update_ammo < 0 %}
+			{{ update_ammo|stringformat:"+d"|slice:"1:" }} bullets were fired!
         {% endif %}
+		{% endif %}
+		{% if update_food %}
+        {% if update_food > 0 %}
+            Gained {{ update_food }} rations of food!
+		{% elif update_ammo < 0 %}
+			{{ update_ammo|stringformat:"+d"|slice:"1:" }} rations of food were eaten.
+        {% endif %}
+		{% endif %}
+		{% if update_kills %}
+           {{ update_ammo|stringformat:"+d"|slice:"1:" }} zombies were killed!
+		{% endif %}
+		{% if update_party %}
+        {% if update_ammo > 0 %}
+            {{ update_ammo }} survivors joined your team!
+		{% elif update_ammo < 0 %}
+			{{ update_ammo|stringformat:"+d"|slice:"1:" }} survivors died.
+        {% endif %}
+		{% endif %}		
+		</br>
         {% if  street  %}
             {{ street }} </br>
             {{ player }} </br>
-            Day: {{player.days}}, Time left in day: {{time_left}}
+            Day {{player.days}}, Time left in day: {{time_left}} minutes
             <li><a href="/scavenger/turn/ENTER/0">ENTER</a></li>
             <li><a href="/scavenger/turn/WAIT/0">WAIT</a></li>
         {% elif house %}

@@ -4,15 +4,15 @@ import random
 from streetfactory import StreetFactory
 from copy import deepcopy
 
-MAX_MOVE_TIME = 10
-MAX_SEARCH_TIME = 5
-WAIT_TIME = 20
-FIGHT_TIME = 5
-RUN_TIME = 2
-ENTER_TIME = 1
-EXIT_TIME = 1
+MAX_MOVE_TIME = 20
+MAX_SEARCH_TIME = 10
+WAIT_TIME = 30
+FIGHT_TIME = 20
+RUN_TIME = 15
+ENTER_TIME = 10
+EXIT_TIME = 10
 NONE_TIME = 0
-LENGTH_OF_DAY = 100
+LENGTH_OF_DAY = 720
 
 class PlayerState(object):
 
@@ -29,7 +29,7 @@ class PlayerState(object):
         As party size gets bigger the time to move is reduced
         :return: an integer denoting the amount of time
         """
-        return MAX_MOVE_TIME - (math.floor(min(math.log(self.party),MAX_MOVE_TIME) / 2))
+        return int(MAX_MOVE_TIME - (math.floor(min(math.log(self.party),MAX_MOVE_TIME) / 2)))
 
 
     @property
@@ -38,7 +38,7 @@ class PlayerState(object):
         As party size gets bigger the time to search is reduced
         :return:
         """
-        return MAX_SEARCH_TIME  - (math.floor(min(self.party, MAX_SEARCH_TIME)/2))
+        return int(MAX_SEARCH_TIME  - (math.floor(min(self.party, MAX_SEARCH_TIME)/2)))
 
 
     def __str__(self):

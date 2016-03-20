@@ -113,7 +113,10 @@ def turn(request,action,num):
         _save(up,g)
         return render(request,'zombie/play.html',context_dict)
     _save(up,g)
-    context_dict['update_state'] = g.update_state
+    context_dict['update_ammo'] = g.update_state.ammo
+    context_dict['update_kills'] = g.update_state.kills
+    context_dict['update_party'] = g.update_state.party
+    context_dict['update_food'] = g.update_state.food
     return render(request, 'zombie/play.html',context_dict)
 
 def new_game(request):
