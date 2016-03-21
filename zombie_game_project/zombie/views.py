@@ -104,7 +104,7 @@ def turn(request,action,num):
         up.most_days_survived = max(up.most_days_survived,context_dict['days'])	
         context_dict = {"end_of":g.player_state.days, 'player':g.player_state, 'badges' : []}
         for b in badges:
-             if ((b.Btype == 'most_kills' and up.most_kills >= b.criteria) or (b.Btype == 'most_people' and up.most_people >= b.criteria) or (b.Btype == 'most_days_survived' and up.most_days_survived >= b.criteria)):
+             if ((b.Btype == 'most_kills' and up.most_kills >= b.criteria) or (b.Btype == 'most_people' and up.most_people >= b.criteria) or (b.Btype == 'most_days_survived' and up.most_days_survived >= b.criteria) or (b.Btype == 'games_played' and up.games_played >= b.criteria)):
                  try:
                       a = Achievement.objects.get(badge=b,player=up)
                  except:
