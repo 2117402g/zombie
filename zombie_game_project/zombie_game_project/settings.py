@@ -29,7 +29,7 @@ TEMPLATE_DIRS = (
     TEMPLATE_PATH,
 )
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','Anthoni.pythonanywhere.com']
 
 
 # Application definition
