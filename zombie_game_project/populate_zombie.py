@@ -27,9 +27,9 @@ def populate():
 	
 	kyle_user = add_user('Keyisle','Keyisle@gmail.com','password','15','5','10','5',None,'data/profile.png')
 	leif_user = add_user('Leif','Leif@gmail.com','password','110', '290','230','60',None,'data/zombie.jpg')
-	three_user = add_user('Bob','Bob@gmail.com','password','51','4','23','6',None,'data/bird.png')
-	four_user = add_user('Bill','Bill@gmail.com','password','31','88','45','62',None,'data/penguin.png')
-	five_user = add_user('Guy','Guy@gmail.com','password','11','48','25','62',None,'data/mario.jpg')
+	three_user = add_user('bob','Bob@gmail.com','bob','51','4','23','6',None,'data/bird.png')
+	four_user = add_user('jill','Bill@gmail.com','jill','31','88','45','62',None,'data/penguin.png')
+	five_user = add_user('jen','Guy@gmail.com','jen','11','48','25','62',None,'data/mario.jpg')
 	six_user = add_user('Gal','Gal@gmail.com','password','34','23','55','45',None,'data/person.png')
 	seven_user = add_user('noob','noob@gmail.com','password','1','1','1','1',None,'data/noob.png')
 	eight_user = add_user('robot','robot@gmail.com','password','101','11','100','1',None,'data/robot.png')

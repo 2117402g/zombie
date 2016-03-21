@@ -15,7 +15,7 @@
 			{{ update_ammo|stringformat:"+d"|slice:"1:" }} rations of food were eaten.
         {% endif %}
 		{% endif %}
-        <li> {{player}}</li>
+		Party: {{ player.party }}, Food: {{ player.food}}, Ammo: {{player.ammo}}, Kills: {{player.kills}} </br> 
 			{% for b in badges %}
 				<img src="{{ b.icon.url }}" alt="yhuh" height="100" width="100"/> You earned the {{b.name}} badge! ({{b.desc}})</br>
 			{% endfor %}

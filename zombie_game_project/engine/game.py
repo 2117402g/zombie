@@ -12,7 +12,7 @@ RUN_TIME = 15
 ENTER_TIME = 10
 EXIT_TIME = 10
 NONE_TIME = 0
-LENGTH_OF_DAY = 720
+LENGTH_OF_DAY = 360
 
 class PlayerState(object):
 

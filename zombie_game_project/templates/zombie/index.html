@@ -2,6 +2,23 @@
 
 {% load staticfiles %}
 
-{% block body_block %}
+{% block title %}Scavenger{% endblock %}
 
+{% block body_block %}
+    <img src="{% static "images/scavenger.png" %}" align="center">
+<h1>Have You Got What It Takes To Survive?</h1>
+        <h4>Fight for survival in the post-apocalyptic streets of Glasgow!</h4>
+	<img src="{% static "images/zombies/5.jpg" %}" align="center" height="400" width="400">	</br>
+	<img src="{% static "images/badge3.png" %}" align="left" height="100" width="100">	
+    <h2> Amass Your Army!</h2>
+        <p> Search for survivors and build up your party!</p>	
+	<img src="{% static "images/badge2.png" %}" align="left" height="100" width="100">			
+    <h2> Thrilling Combat! </h2>
+        <p> Shoot up zombies in fast-paced clicking fun!</p>			
+	<img src="{% static "images/badge.png" %}" align="left" height="100" width="100">		
+    <h2> Show Your Skills!</h2>
+        <p> Earn badges and work your way up the leaderboards!</p>
+		</br>
+		</br>
+		<h6> <b>Created by Anthoni Gleeson, Kyle Burns, Kayleigh Kavanagh and Matthew Banjo.</b> </h6>
 {% endblock %}
