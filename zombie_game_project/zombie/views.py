@@ -20,14 +20,16 @@ def index(request):
 	
 def fill_dict(g):
     context_dict = {'party':g.player_state.party, 'ammo': g.player_state.ammo, 'kills': g.player_state.kills,
-				   'days': g.player_state.days,}
+				   'days': g.player_state.days,'food': g.player_state.food}
     if g.game_state == 'STREET':
-        context_dict.update({'player':g.player_state, 'game':g.game_state, 'turn_options': g.turn_options(),
-                   'time_left':g.time_left,"move_options":[],'street': g.street , 'house_list': g.street.house_list,
+        context_dict.update({'player':g.player_state.party, 'game':g.game_state, 'turn_options': g.turn_options(),
+                   'time_left':g.time_left,"move_options":[],'street': g.street.name , 'house_list': g.street.house_list,
                    'stats': [], 'people': "x"*(min(g.player_state.party,30)), 'current_house': g.street.get_current_house(),
 				   })
         i = 0
         for house in g.street.house_list:
+				if context_dict['house_list'][i] == context_dict['current_house']:
+					context_dict['location'] = i
 				context_dict['stats'].append([house.num_of_rooms,house.get_house_stats()[3],i])
 				context_dict["move_options"].append(i)
 				i += 1
@@ -113,10 +115,6 @@ def turn(request,action,num):
         _save(up,g)
         return render(request,'zombie/play.html',context_dict)
     _save(up,g)
-    context_dict['update_ammo'] = g.update_state.ammo
-    context_dict['update_kills'] = g.update_state.kills
-    context_dict['update_party'] = g.update_state.party
-    context_dict['update_food'] = g.update_state.food
     return render(request, 'zombie/play.html',context_dict)
 
 def new_game(request):
