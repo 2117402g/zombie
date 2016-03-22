@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from zombie.forms import UserForm, UserProfileForm
+from zombie.forms import ImageForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.template import RequestContext
@@ -17,7 +17,20 @@ def index(request):
     context_dict = {}
     return render(request, 'zombie/index.html', context_dict)
 
-	
+@login_required
+def update_image(request):
+	up = UserProfile.objects.get(user=User.objects.get(username = request.user))
+	if request.method == 'POST':
+		image_form = ImageForm(request.POST, instance=up)
+		if image_form.is_valid():
+			up.picture = request.FILES['picture']	
+			up.save()
+			return HttpResponseRedirect('/scavenger/user/')
+	else:
+		image_form = ImageForm(instance=up)
+	return render(request,'zombie/update_image.html',{'image_form': image_form})
+
+
 def fill_dict(g):
     context_dict = {'party':g.player_state.party, 'ammo': g.player_state.ammo, 'kills': g.player_state.kills,
 				   'days': g.player_state.days,'food': g.player_state.food}
@@ -104,7 +117,7 @@ def turn(request,action,num):
         up.most_days_survived = max(up.most_days_survived,context_dict['days'])	
         context_dict = {"end_of":g.player_state.days, 'player':g.player_state, 'badges' : []}
         for b in badges:
-             if ((b.Btype == 'most_kills' and up.most_kills >= b.criteria) or (b.Btype == 'most_people' and up.most_people >= b.criteria) or (b.Btype == 'most_days_survived' and up.most_days_survived >= b.criteria) or (b.Btype == 'games_played' and up.games_played >= b.criteria)):
+             if ((b.Btype == 'badges' and len(Achievement.objects.filter(player=up)) >= b.criteria) or (b.Btype == 'most_kills' and up.most_kills >= b.criteria) or (b.Btype == 'most_people' and up.most_people >= b.criteria) or (b.Btype == 'most_days_survived' and up.most_days_survived >= b.criteria) or (b.Btype == 'games_played' and up.games_played >= b.criteria)):
                  try:
                       a = Achievement.objects.get(badge=b,player=up)
                  except:

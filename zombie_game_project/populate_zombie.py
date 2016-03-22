@@ -25,6 +25,8 @@ def populate():
 	silver_killer = add_badge('Silver Killer','kill 10 zombies','most_kills','10','2','data/silverKiller.png')
 	bronze_killer = add_badge('Bronze Killer','kill 5 zombies','most_kills','5','1','data/bronzeKiller.png')
 	
+	platinum = add_badge('Pure Platinum','earn all other badges','badges','12','4','data/platinum.png')
+	
 	kyle_user = add_user('Keyisle','Keyisle@gmail.com','password','15','5','10','5',None,'data/profile.png')
 	leif_user = add_user('Leif','Leif@gmail.com','password','110', '290','230','60',None,'data/zombie.jpg')
 	three_user = add_user('bob','Bob@gmail.com','bob','51','4','23','6',None,'data/bird.png')

@@ -11,8 +11,8 @@ class UserProfile(models.Model):
     most_days_survived = models.IntegerField(default=0)
     most_kills = models.IntegerField(default=0)
     most_people = models.IntegerField(default=0)
-    current_game = models.CharField(max_length=1024,null=True)
-    picture = models.ImageField(upload_to='profile_images', default='data/profile.png')
+    current_game = models.CharField(max_length=20000,null=True)
+    picture = models.FileField(upload_to='profile_images', default='data/profile.png')
 
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):

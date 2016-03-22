@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Change Image{% endblock %}
+
+{% block body_block %}
+	<div class=registration-form>
+	<form enctype="multipart/form-data" method="post" action="{% url 'update_image' %}">
+     {% csrf_token %}
+	 {{ image_form.as_p }}
+	<button type="submit">Update</button>
+	</form>
+	</div>
+{% endblock %}

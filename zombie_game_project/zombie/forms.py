@@ -2,6 +2,10 @@ from django import forms
 from django.contrib.auth.models import User
 from zombie.models import UserProfile
 
+class ImageForm(forms.ModelForm):
+	class Meta:
+		model = UserProfile
+		fields = ('picture',)
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
