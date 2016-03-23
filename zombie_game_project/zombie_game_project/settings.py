@@ -21,7 +21,7 @@ sys.path.append(BASE_DIR)
 SECRET_KEY = 'xo-(6a%@&6e5wu%52nzh@6o(e*97&4n%_+kx++ull!!5*ualwe'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
