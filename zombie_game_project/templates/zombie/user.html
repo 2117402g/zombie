@@ -6,7 +6,7 @@
 {% block title %}Profile{% endblock %}
 
 {% block body_block %}
-<div class="text-center" style="border:1px solid #000; background-color: rgba(5,4,2,0.6);color:white;">
+<div class="text-center" style="width:675px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
         <div class="page-header">
         	<h1> {{ user.username }}'s Profile</h1>
 			<img style="border:3px solid #000;" src="{{ userprofile.picture.url }}" alt="User image " height="150" width="150"/><br>			
@@ -22,11 +22,11 @@
 					None Given
 			{% endif %}</p>
         <br>
-        <h3> Your Game Statistics </h3>
+        <h2> Your Game Statistics </h2>
      <!-- Display extra information if required -->
 	 
 		
-       <p> Games Played:
+       <h3><p> Games Played:
        		{% if userprofile.games_played %}
 					{{ userprofile.games_played}}
 
@@ -54,18 +54,20 @@
 								{% else %}
 			Zero
 			{% endif %}</p>
-
+</h3>
+</br>
+</br>
 		<h3>Badges: {{achievements|length}} / 13 </h3>	
     <div align ="center" ><div align="left" style="width:625px;height:{{no}}px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
-
+	<b>
 		 {% if achievements %}
                 {% for a in achievements %}
 					<img src="{{ a.badge.icon.url }}" alt="yhuh" height="100" width="100"/>
-					{{a.badge.name}} ({{a.badge.desc}}), earned on {{ a.date }}</br>
+					{{a.badge.name}} ({{a.badge.desc}}), earned {{ a.date }}</br>
                 {% endfor %}
 			{% else %}
 					None Earned
-			{% endif %}</div>
+			{% endif %}</div></b>
     </div>
 	</br>
        <h3> Your options </h3>

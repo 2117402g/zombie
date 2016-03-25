@@ -14,6 +14,7 @@
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
 
+
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -55,9 +56,12 @@
 				</div> 	
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
+					<li><a href="{% url 'play' %}">Play Now</a></li>
+					<li><a href="{% url 'leaderboards' %}">Leaderboards</a></li>
+					<li><a href="{% url 'how_to_play' %}">How To Play</a></li>
 					{% if user.is_authenticated %}
 						<li><a href="{% url 'user' %}">Profile</a></li>
-						<li><a href="{% url 'auth_logout' %}">Logout</a></li
+						<li><a href="{% url 'auth_logout' %}">Logout</a></li>
 					{% else %}
 						<li><a href="{% url 'registration_register' %}">Sign Up</a></li>
 						<li><a href ="{% url 'auth_login' %}">Login</a></li>
