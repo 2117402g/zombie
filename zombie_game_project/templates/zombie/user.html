@@ -1,23 +1,20 @@
 {% extends 'base.html' %}
 
 {% load staticfiles %}
-<style>
-    h4{
-        alignment: right;
-    }
-</style>
+
 
 {% block title %}Profile{% endblock %}
 
 {% block body_block %}
+<div class="text-center" style="border:1px solid #000; background-color: rgba(5,4,2,0.6);color:white;">
         <div class="page-header">
         	<h1> {{ user.username }}'s Profile</h1>
-			<img src="{{ userprofile.picture.url }}" alt="User image " height="150" width="150"/><br>			
+			<img style="border:3px solid #000;" src="{{ userprofile.picture.url }}" alt="User image " height="150" width="150"/><br>			
 			<a href="/scavenger/update_image/">Change</a>
        </div>
 
-       <h4>Email: {{ user.email }}</h4>
-    <div align = "left"> 
+       <h2>Email: {{ user.email }}</h2>
+
 
        		 {% if userprofile.picture %}
 					
@@ -57,9 +54,9 @@
 								{% else %}
 			Zero
 			{% endif %}</p>
-			</div>	
+
 		<h3>Badges: {{achievements|length}} / 13 </h3>	
-    <div align ="left" ><div align="left" style="width:625px;height:{{no}}px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
+    <div align ="center" ><div align="left" style="width:625px;height:{{no}}px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
 
 		 {% if achievements %}
                 {% for a in achievements %}
@@ -74,5 +71,5 @@
        <h3> Your options </h3>
             <a href="/accounts/password/change/">Change your password</a>
     </h4>
-
+</div>
 {% endblock %}
