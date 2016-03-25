@@ -57,7 +57,7 @@ class ViewTests(TestCase):
 		
     def test_user_redirect(self):
         """
-        Redirects to login screen when trying to play game.
+        Redirects to login screen when trying to go to user page.
         """
         response = self.client.get(reverse('user'))
         self.assertEqual(response.status_code, 302)	
@@ -65,7 +65,7 @@ class ViewTests(TestCase):
 		
     def test_leaderboards(self):
         """
-        Redirects to login screen when trying to play game.
+        Leaderboard contains the new user.
         """
         add_user('tester','t@t.com','t','567','0','0','0',None,'test.jpg')
 		
