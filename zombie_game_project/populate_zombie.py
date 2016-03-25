@@ -9,6 +9,9 @@ from zombie.models import Achievement, Badge, UserProfile
 from django.contrib.auth.models import User
 
 def populate():
+
+	#Add the 13 achievable badges to the game's database
+	
 	gold_survival = add_badge('Gold Survivor','survive for 15 days','most_days_survived','15','3','data/goldSurvival.png')
 	silver_survival = add_badge('Silver Survivor','survive for 10 days','most_days_survived','10','2','data/silverSurvival.png')
 	bronze_survival = add_badge('Bronze Survivor','survive for 5 days','most_days_survived','5','1','data/bronzeSurvival.png')
@@ -27,16 +30,20 @@ def populate():
 	
 	platinum = add_badge('Pure Platinum','earn all other badges','badges','12','4','data/platinum.png')
 	
+	#Add ten users with random game statistics to the game's database
+	
 	kyle_user = add_user('Keyisle','Keyisle@gmail.com','password','15','5','10','5',None,'data/profile.png')
 	leif_user = add_user('Leif','Leif@gmail.com','password','110', '290','230','60',None,'data/zombie.jpg')
-	three_user = add_user('bob','Bob@gmail.com','bob','51','4','23','6',None,'data/bird.png')
-	four_user = add_user('jill','Bill@gmail.com','jill','31','88','45','62',None,'data/penguin.png')
-	five_user = add_user('jen','Guy@gmail.com','jen','11','48','25','62',None,'data/mario.jpg')
+	three_user = add_user('bob','bob@gmail.com','bob','0','0','0','0',None,'data/bird.png')
+	four_user = add_user('jill','jill@gmail.com','jill','0','0','0','0',None,'data/penguin.png')
+	five_user = add_user('jen','jen@gmail.com','jen','0','0','0','0',None,'data/mario.jpg')
 	six_user = add_user('Gal','Gal@gmail.com','password','34','23','55','45',None,'data/person.png')
 	seven_user = add_user('noob','noob@gmail.com','password','1','1','1','1',None,'data/noob.png')
 	eight_user = add_user('robot','robot@gmail.com','password','101','11','100','1',None,'data/robot.png')
 	nine_user = add_user('tom','tom@gmail.com','password','3','2','5','5',None,'data/dog.jpg')
 	ten_user = add_user('wad2','wad2@gmail.com','password','340','223','155','451',None,'data/owl.png')
+	
+	#Add the appropriate achievements for one of the added users
 	
 	a1 = add_achievement(gold_stamina,kyle_user,date=datetime.datetime.now())
 	a2 = add_achievement(silver_stamina,kyle_user,date=datetime.datetime.now())
@@ -47,7 +54,7 @@ def populate():
 	a7 = add_achievement(bronze_party,kyle_user,date=datetime.datetime.now())	
 	
 	
-	
+#Adds a new type of badge to the database.	
 def add_badge(name,desc,Btype,criteria,level,icon):
     b = Badge.objects.get_or_create(name=name)[0]
     b.desc=desc
@@ -58,6 +65,7 @@ def add_badge(name,desc,Btype,criteria,level,icon):
     b.save()
     return b
 
+#Adds a user to the database.
 def add_user(usern,email,passw,games_played,most_days_survived,most_kills,most_people,current_game,picture):
     try:
 		u = User.objects.get(username=usern)
@@ -76,6 +84,7 @@ def add_user(usern,email,passw,games_played,most_days_survived,most_kills,most_p
         up.save()
     return up
 
+#Adds an achievement to the database.
 def add_achievement(badge,player,date):
     a = Achievement.objects.get_or_create(badge=badge,player=player)[0]
     a.date=date

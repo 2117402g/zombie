@@ -10,6 +10,7 @@ class MyRegistrationView(RegistrationView):
     def get_success_url(self, request):
         return '/accounts/register/complete/'
 
+#The urls for the main app, the admin interface and django-registration-redux accounts
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^scavenger/', include('zombie.urls')),
@@ -19,7 +20,6 @@ urlpatterns = patterns('',
 
 
 
-# UNDERNEATH your urlpatterns definition, add the following two lines:
 if settings.DEBUG:
     urlpatterns += patterns(
         'django.views.static',
