@@ -5,11 +5,11 @@
 {% block title %}Change Image{% endblock %}
 
 {% block body_block %}
-	<div class=registration-form>
-	<form enctype="multipart/form-data" method="post" action="{% url 'update_image' %}">
-     {% csrf_token %}
-	 {{ image_form.as_p }}
-	<button type="submit">Update</button>
-	</form>
+	<div class="col-md-13 col-md-offset-5" style="width:200px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
+		<form enctype="multipart/form-data" method="post" action="{% url 'update_image' %}">
+		{% csrf_token %}
+		{{ image_form.as_p }}
+		<button type="submit">Update</button>
+		</form>
 	</div>
 {% endblock %}

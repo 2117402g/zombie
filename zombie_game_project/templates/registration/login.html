@@ -2,10 +2,9 @@
 
 {% block body_block %}
 
-<h1>Login</h1>
+<div class="text-center" style="width:675px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
+	<h1>Login</h1>
 
-	<!--Form for logging into the game.-->
-	
 	<form method="post" action=".">
 		{% csrf_token %}
 		{{ form.as_p }}
@@ -15,5 +14,5 @@
 	</form>
 
 	<p>Not a member? <a href="{% url 'registration_register' %}">Register</a>!</p>
-	
+</div>
 {% endblock %}

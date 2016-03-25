@@ -2,34 +2,23 @@
 
 {% load staticfiles %}
 
-
 {% block title %}Profile{% endblock %}
 
 {% block body_block %}
 <div class="text-center" style="width:675px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
-        <div class="page-header">
-        	<h1> {{ user.username }}'s Profile</h1>
-			<img style="border:3px solid #000;" src="{{ userprofile.picture.url }}" alt="User image " height="150" width="150"/><br>			
-			<a href="/scavenger/update_image/">Change</a>
-       </div>
+	<div class="page-header">
+		<h1> {{ user.username }}'s Profile</h1>
+		<img style="border:3px solid #000;" src="{{ userprofile.picture.url }}" alt="User image " height="150" width="150"/><br>			
+		<a href="/scavenger/update_image/">Change</a>
+	</div>
 
-       <h2>Email: {{ user.email }}</h2>
+	<h2>Email: {{ user.email }}</h2>
 
+	<h2> Your Game Statistics </h2>
 
-       		 {% if userprofile.picture %}
-					
-			{% else %}
-					None Given
-			{% endif %}</p>
-        <br>
-        <h2> Your Game Statistics </h2>
-     <!-- Display extra information if required -->
-	 
-		
        <h3><p> Games Played:
        		{% if userprofile.games_played %}
 					{{ userprofile.games_played}}
-
 			{% else %}
 			Zero
 			{% endif %}</p>
@@ -37,41 +26,42 @@
        <p> Most Days Survived:
        		{% if userprofile.most_days_survived %}
 					{{ userprofile.most_days_survived}}
-								{% else %}
+			{% else %}
 			Zero
 			{% endif %}</p>
 
        <p> Largest Party Size:
        		{% if userprofile.most_people %}
 					{{ userprofile.most_people}}
-								{% else %}
+			{% else %}
 			Zero
 			{% endif %}</p>
 
        <p> Most Kills:
        		{% if userprofile.most_kills %}
 					{{ userprofile.most_kills}}
-								{% else %}
-			Zero
-			{% endif %}</p>
-</h3>
-</br>
-</br>
-		<h3>Badges: {{achievements|length}} / 13 </h3>	
-    <div align ="center" ><div align="left" style="width:625px;height:{{no}}px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
-	<b>
-		 {% if achievements %}
-                {% for a in achievements %}
-					<img src="{{ a.badge.icon.url }}" alt="yhuh" height="100" width="100"/>
-					{{a.badge.name}} ({{a.badge.desc}}), earned {{ a.date }}</br>
-                {% endfor %}
 			{% else %}
-					None Earned
-			{% endif %}</div></b>
-    </div>
+			Zero
+			{% endif %}</p></h3>
 	</br>
-       <h3> Your options </h3>
-            <a href="/accounts/password/change/">Change your password</a>
-    </h4>
+	</br>
+	
+	<h3>Badges: {{achievements|length}} / 13 </h3>	
+	
+    <div align ="center" ><div align="left" style="width:625px;height:{{no}}px;border:1px solid #000; background-color: rgba(5,4,2,0.1);">
+	<b>{% if achievements %}
+			{% for a in achievements %}
+				<img src="{{ a.badge.icon.url }}" alt="yhuh" height="100" width="100"/>
+				{{a.badge.name}} ({{a.badge.desc}}), earned {{ a.date }}</br>
+			{% endfor %}
+		{% else %}
+			None Earned
+		{% endif %}</div></b>
+    </div>
+	
+	</br>
+	
+	<h3> Your options </h3>
+		<a href="/accounts/password/change/">Change your password</a>
 </div>
 {% endblock %}

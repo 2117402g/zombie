@@ -7,43 +7,46 @@
 {% block body_block %}
     <img src="{% static "images/scavenger.png" %}" align="center" height="141" width="467">
 	<h1>Have You Got What It Takes To Survive?</h1>
-        <h3>Fight for survival in the post-apocalyptic streets of Glasgow!</h3>
+    <h3>Fight for survival in the post-apocalyptic streets of Glasgow!</h3>
 		
-		<a href="/scavenger/play">
-		<img style="border:3px solid #000;" border="1" alt="Play_Now" src="{% static "images/play.jpg" %}" width="300" height="300">
-		</a>
+	<a href="/scavenger/play">
+	<img style="border:3px solid #000;" border="1" alt="Play_Now" src="{% static "images/play.jpg" %}" width="300" height="300">
+	</a>
 		
-		<a href="/scavenger/leaderboards">
-		<img style="border:3px solid #000;" border="1" alt="Play_Now" src="{% static "images/leaderboards.jpg" %}" width="300" height="300">
-		</a>
-			</br>
-			</br>
-<div class="row">
-<div class="col-xs-4">
-  <div class="text-center" style="border:1px solid #000; background-color: rgba(5,4,2,0.6);color:white;">
-  <img src="{% static "images/badge3.png" %}" align="center" height="150" width="150">
-    <h1>Amass Your Army!</h1>
-        <h4>Search for survivors and build up your party!</h4>
-</div>
-</div>
-<div class="col-xs-4">
- <div class="text-center" style="border:1px solid #000; background-color: rgba(5,4,2,0.6);color:white;">
-	<img src="{% static "images/badge2.png" %}" align="center" height="150" width="150">
-    <h1>Thrilling Combat!</h1>
-        <h4>Shoot up zombies in fast-paced clicking fun!	</h4>
-   </div>
-  </div>  
-  <div class="col-xs-4">
-   <div class="text-center"  style="border:1px solid #000; background-color: rgba(5,4,2,0.6);color:white;">
-   <img src="{% static "images/badge.png" %}" align="center" height="150" width="150">
-    <h1>Show your Skills!</h1>
-        <h4>Earn badges and get onto the leaderboards!</h4>
-  </div>
- </div>
-</div>			
-		</br>
-		</br>
+	<a href="/scavenger/leaderboards">
+	<img style="border:3px solid #000;" border="1" alt="Leaderboards" src="{% static "images/leaderboards.jpg" %}" width="300" height="300">
+	</a>
+	</br>
+	</br>
+	
+	<div class="row">
+		<div class="col-xs-4">
+			<div class="text-center" style="border:1px solid #000; background-color: rgba(5,4,2,0.6);color:white;">
+				<img src="{% static "images/badge3.png" %}" align="center" height="150" width="150">
+				<h1>Amass Your Army!</h1>
+				<h4>Search for survivors and build up your party!</h4>
+			</div>
 		</div>
 		
-		 <b>Created by Anthoni Gleeson, Kyle Burns, Kayleigh Kavanagh and Matthew Banjo.</b> </h6>
+		<div class="col-xs-4">
+			<div class="text-center" style="border:1px solid #000; background-color: rgba(5,4,2,0.6);color:white;">
+				<img src="{% static "images/badge2.png" %}" align="center" height="150" width="150">
+				<h1>Thrilling Combat!</h1>
+				<h4>Shoot up zombies in fast-paced clicking fun!	</h4>
+			</div>
+		</div>  
+		
+		<div class="col-xs-4">
+			<div class="text-center"  style="border:1px solid #000; background-color: rgba(5,4,2,0.6);color:white;">
+				<img src="{% static "images/badge.png" %}" align="center" height="150" width="150">
+				<h1>Show your Skills!</h1>
+				<h4>Earn badges and get onto the leaderboards!</h4>
+			</div>
+		</div>
+	</div>	
+	</br>
+	</br>
+		
+	 <b>Created by Anthoni Gleeson, Kyle Burns, Kayleigh Kavanagh and Matthew Banjo.</b>
+	 
 {% endblock %}

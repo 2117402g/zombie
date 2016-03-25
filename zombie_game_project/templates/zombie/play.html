@@ -9,11 +9,11 @@
     {% elif end_of %}
         <h1> END OF DAY {{end_of}}</h1>
 		{% if update_food %}
-        {% if update_food > 0 %}
-            Gained {{ update_food }} rations of food!
-		{% elif update_ammo < 0 %}
-			{{ update_ammo|stringformat:"+d"|slice:"1:" }} rations of food were eaten.
-        {% endif %}
+			{% if update_food > 0 %}
+				Gained {{ update_food }} rations of food!
+			{% elif update_ammo < 0 %}
+				{{ update_ammo|stringformat:"+d"|slice:"1:" }} rations of food were eaten.
+			{% endif %}
 		{% endif %}
 		Party: {{ player.party }}, Food: {{ player.food}}, Ammo: {{player.ammo}}, Kills: {{player.kills}} </br> 
 			{% for b in badges %}
@@ -23,31 +23,31 @@
     {% else %}
 		</br>
 		{% if num_zombies %}
-		{{num_zombies}} zombies attack!
+			{{num_zombies}} zombies attack!
 		{% endif %}
 		{% if update_state.ammo %}
-        {% if update_state.ammo > 0 %}
-            Gained {{ update_state.ammo }} ammo!
-		{% elif update_state.ammo < 0 %}
-			{{ update_state.ammo|stringformat:"+d"|slice:"1:" }} bullets were fired!
-        {% endif %}
+			{% if update_state.ammo > 0 %}
+				Gained {{ update_state.ammo }} ammo!
+			{% elif update_state.ammo < 0 %}
+				{{ update_state.ammo|stringformat:"+d"|slice:"1:" }} bullets were fired!
+			{% endif %}
 		{% endif %}
 		{% if update_state.kills %}
            {{ update_state.kills }} zombies were killed!
 		{% endif %}
 		{% if update_state.party %}
-        {% if update_state.party > 0 %}
-            {{ update_state.party }} survivors joined your team!
-		{% elif update_state.party < 0 %}
-			{{ update_state.party|stringformat:"+d"|slice:"1:" }} survivors died.
-        {% endif %}
+			{% if update_state.party > 0 %}
+				{{ update_state.party }} survivors joined your team!
+			{% elif update_state.party < 0 %}
+				{{ update_state.party|stringformat:"+d"|slice:"1:" }} survivors died.
+			{% endif %}
 		{% endif %}		
 		{% if update_state.food %}
-        {% if update_state.food > 0 %}
-            Gained {{ update_state.food }} rations of food!
-		{% elif update_state.food < 0 %}
-			{{ update_state.food|stringformat:"+d"|slice:"1:" }} rations of food were eaten.
-        {% endif %}
+			{% if update_state.food > 0 %}
+				Gained {{ update_state.food }} rations of food!
+			{% elif update_state.food < 0 %}
+				{{ update_state.food|stringformat:"+d"|slice:"1:" }} rations of food were eaten.
+			{% endif %}
 		{% endif %}
 		</br>
         {% if street  %}
@@ -63,9 +63,8 @@
             {% if search_options %}
 				</br>
 				<img src="/static/images/zombies/0.jpg" style="border:1px solid #000; alt="User image " height="400" width="400"/>
-             </br>
-			 {% for search in search_options %}
-					
+				</br>
+				{% for search in search_options %}		
 					<td class="{% cycle 'Kitchen' 'Bedroom' 'Bathroom' 'Living Room' 'Dining Room' 'Basement' 'Study' 'Wardrobe' 'Garage' 'Sports Room' 'Pool Room' 'Bar' 'Nursery' 'Gym' 'Balcony' as p %}"></td>
 					<a href="/scavenger/turn/SEARCH/{{search}}">-{{p}}-</a>
                 {% endfor %}
@@ -132,16 +131,16 @@
 		</br>
 
 		{% if people %}
-		<img src="/static/images/road.png" alt="User image " height="50" width="1100"/>
-		</br>
-		{% for party in people %}
-			<td class="{% cycle '1' '2' '3' '4' '5' as p %}"></td>
-			<img src="/static/images/party/{{p}}.png" alt="User image " height="50" width="25"/>
-		{%endfor%}
+			<img src="/static/images/road.png" alt="User image " height="50" width="1100"/>
+			</br>
+			{% for party in people %}
+				<td class="{% cycle '1' '2' '3' '4' '5' as p %}"></td>
+				<img src="/static/images/party/{{p}}.png" alt="User image " height="50" width="25"/>
+			{%endfor%}
 		{% endif%}
 		
 		{% if street %}
-		 </br><a href="/scavenger/turn/WAIT/0"><input type="image" src="{% static "images/wait.png" %}" height = "50em" width = "150em" name="saveForm" class="btTxt submit" id="saveForm" /></br>
+			</br><a href="/scavenger/turn/WAIT/0"><input type="image" src="{% static "images/wait.png" %}" height = "50em" width = "150em" name="saveForm" class="btTxt submit" id="saveForm" /></br>
 		{% endif %}
 		
     {% endif %}
